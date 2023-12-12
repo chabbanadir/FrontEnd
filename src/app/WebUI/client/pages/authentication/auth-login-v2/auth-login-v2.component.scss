@@ -1,0 +1,14 @@
+@import '@core/scss/base/bootstrap-extended/include'; // Bootstrap includes
+@import '@core/scss/base/pages/page-auth.scss';
+
+.auth-help-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.bg-login_page{
+  background-position: center;
+  background-size: cover;
+  background-image: url('/assets/images/pages/login.jpg');
+}

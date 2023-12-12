@@ -1,0 +1,41 @@
+canvas{
+  width:100% !important;
+  height: 100%  !important;
+}
+
+#pd-container{
+  background-color: rgb(82, 86, 89);
+  padding: 10px;
+}
+
+/*.canvas-container {
+  width: 100% !important;
+  background-color: #ffffff;
+  border: 1px solid gray;
+  height: 100% !important;
+  min-height: 800px;
+}*/
+
+.card.card-fullscreen {
+  .canvas-container {
+    background-color: #ffffff;
+    border: 1px solid gray;
+    min-height: 800px;
+    margin: auto;
+    /*    height: 100% !important;
+        width: 100% !important;*/
+  }
+}
+
+.card:not(.card-fullscreen) {
+  .canvas-container {
+    width: 100% !important;
+    background-color: #ffffff;
+    border: 1px solid gray;
+    height: 100% !important;
+    min-height: 800px;
+    margin: auto;
+  }
+}
+
+

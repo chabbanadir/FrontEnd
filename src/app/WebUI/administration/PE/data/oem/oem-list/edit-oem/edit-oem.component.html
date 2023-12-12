@@ -1,0 +1,64 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #OEMForm="ngForm" (ngSubmit)="(OEMForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('edit-oem-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">EDIT <span
+                            style="color: #E98300;">{{oem.name}}</span></h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="form-group">
+                        <label class="form-label" for="basic-icon-default-uname">Name</label>
+                        <input
+                            #OEMNameRef="ngModel"
+                            [(ngModel)]="oem.name"
+                            [class.error]="OEMForm.submitted && OEMNameRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-icon-default-uname"
+                            name="name"
+                            placeholder="VW"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="OEMForm.submitted && OEMNameRef.invalid" class="invalid-form">
+                        <small *ngIf="OEMNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #OEMStatusRef="ngModel" [(ngModel)]="oem.status"
+                                   [class.error]="OEMForm.submitted && OEMStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+                        <span *ngIf="OEMForm.submitted && OEMStatusRef.invalid" class="invalid-form">
+                         <small *ngIf="OEMStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <button (click)="onSubmit(OEMForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Edit
+                    </button>
+                    <button (click)="toggleSidebar('edit-oem-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect>
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="content-header">
+    <h5 class="mb-0">Sketch</h5>
+</div>
+
+<core-card [actions]="'expand'">
+    <h4 class="card-title">
+        <div class="d-flex justify-content-between">
+            <button (click)="generateIdentifications()"  class="btn btn-info btn-next"
+                    rippleEffect>
+                <span class="align-middle d-sm-inline-block d-none">Generate IDENTIFICATIONS</span>
+            </button>
+            <button (click)="generateKit()"  class="btn btn-info btn-space">
+            <span class="align-middle d-sm-inline-block d-none">Generate Kits</span>
+    </button>
+        </div>
+        
+    </h4>
+    <div class="card-body">
+        <div id="infoDraggable" class="draggable" cdkDrag cdkDragBoundary=".card">
+            <div class="handle">Details</div>
+            <div>
+                <div id="details"></div>
+            </div>
+        </div>
+        
+           
+          
+
+        <gojs-diagram #myDiagram
+                      [initDiagram]='sketch.initDiagram'
+                      [nodeDataArray]='state.diagramNodeData'
+                      [linkDataArray]='state.diagramLinkData'
+                      [divClassName]='diagramDivClassName'
+                      [modelData]='state.diagramModelData'
+                      [skipsDiagramUpdate]='state.skipsDiagramUpdate'
+                      (modelChange)='sketch.diagramModelChange($event)'
+                      
+        > </gojs-diagram>
+        
+    </div>
+</core-card>
+
+<div class="d-flex justify-content-between mt-2">
+    <button (click)="modernHorizontalPrevious()" class="btn btn-primary btn-prev" rippleEffect>
+        <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
+        <span class="align-middle d-sm-inline-block d-none">Previous</span>
+    </button>
+
+    <button (click)="modernHorizontalNext();exportToExcel()" [disabled]="isNotGood" class="btn btn-primary btn-next"
+            rippleEffect>
+        <span class="align-middle d-sm-inline-block d-none">Next</span>
+        <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
+    </button>
+</div>

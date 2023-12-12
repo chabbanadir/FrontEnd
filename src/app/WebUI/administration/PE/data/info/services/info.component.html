@@ -1,0 +1,136 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #InfoForm="ngForm" (ngSubmit)="(InfoForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('add-info-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+               
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New Part Number</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    
+                
+
+                    <label class="form-label" for="name">TE PN :</label>
+                    <input
+                            [(ngModel)]="partNumber"
+                            class="form-control"
+                            disabled
+                            id="name"
+                            name="name"
+                            type="text"
+                    />
+                </div>
+        
+                <div class="form-group col-md-4">
+                    <label class="form-label" for="customerPN">Customer PN :</label>
+                    <input
+                        #customerPNRef="ngModel"
+                        [(ngModel)]="customerPN"
+                        [class.error]="!customerPNRef.valid && customerPNRef.touched"
+                        class="form-control"
+                        id="customerPN"
+                        name="customerPN"
+                        placeholder="TEXXXXXXXXXXXXX"
+                        required
+                        type="text"
+                    />
+                </div>
+        
+                <div class="form-group col-md-4">
+                    <label class="form-label" for="projectNumber">Project Number :</label>
+                    <input
+                        #projectNumberRef="ngModel"
+                        [(ngModel)]="projectNumber"
+                        [class.error]="!projectNumberRef.valid && projectNumberRef.touched"
+                        class="form-control"
+                        id="projectNumber"
+                        name="projectNumber"
+                        placeholder="TEXXXXXXXXXXXXX"
+                        required
+                        type="text"
+                    />
+                </div>
+        
+            </div>
+        
+        
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="form-label" for="selectedOEM">OEM</label>
+                    <ng-select [(ngModel)]="oemId"
+                               [clearable]="false"
+                               [items]="this.data.oems"
+                               [markFirst]="true"
+                               [searchable]="false"
+                               bindLabel="name"
+                               bindValue="id"
+                               id="selectedOEM"
+                               name="selectedOEM"
+                               placeholder="Select OEM"
+                               required>
+                    </ng-select>
+                </div>
+        
+                <div class="form-group col-md-4">
+                    <label class="form-label" for="harnessMaker">Harness Maker :</label>
+                    <ng-select
+                               [(ngModel)]="harnessMakerId"
+                               [clearable]="false"
+                               [items]="this.data.harnessMakers"
+                               bindLabel="name"
+                               bindValue="id"
+                               id="harnessMaker"
+                               name="harnessMaker" placeholder="Select Harness Maker"
+                               required>
+                    </ng-select>
+                </div>
+        
+        
+                <div class="form-group col-md-2">
+                    <label class="form-label">number of Connectors:</label>
+                    <core-touchspin [color]="'warning'"
+                                    (onChange)="countChange($event)"
+                                    [minValue]="2"
+                                    [numberValue]="2"
+                                    style="display: flex;justify-content: center;" required>
+                    </core-touchspin>
+                </div>
+        
+        
+            </div>
+        
+
+
+                    
+                        <span *ngIf="InfoForm.submitted && FInfoStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FIStatusRef.errors.required"
+                     class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <button (click)="submit(InfoForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('add-info-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

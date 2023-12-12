@@ -1,0 +1,111 @@
+<div class="content-header">
+    <h5 class="mb-0">Config</h5>
+</div>
+    <form #infosForm="ngForm" (ngSubmit)="getInfoFormData(infosForm.value)"> 
+    <div class="row">
+
+        <div class="form-group col-md-4">
+           
+            <label class="form-label" for="name">TE PN :</label>
+            <input
+                    [(ngModel)]="partNumber"
+                    class="form-control"
+                    disabled
+                    id="name"
+                    name="name"
+                    type="text"
+            />
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label" for="customerPN">Customer PN :</label>
+            <input
+                #customerPNRef="ngModel"
+                [(ngModel)]="customerPN"
+                [class.error]="!customerPNRef.valid && customerPNRef.touched"
+                class="form-control"
+                id="customerPN"
+                name="customerPN"
+                placeholder="TEXXXXXXXXXXXXX"
+                required
+                type="text"
+            />
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label" for="projectNumber">Project Number :</label>
+            <input
+                #projectNumberRef="ngModel"
+                [(ngModel)]="projectNumber"
+                [class.error]="!projectNumberRef.valid && projectNumberRef.touched"
+                class="form-control"
+                id="name"
+                name="projectNumber"
+                placeholder="TEXXXXXXXXXXXXX"
+                required
+                type="text"
+            />
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label class="form-label" for="selectedOEM">OEM</label>
+            <ng-select [(ngModel)]="oemId"
+                       [clearable]="false"
+                       [items]="this.data.oems"
+                       [markFirst]="true"
+                       [searchable]="false"
+                       bindLabel="name"
+                       bindValue="id"
+                       id="selectedOEM"
+                       name="selectedOEM"
+                       placeholder="Select OEM"
+                       required>
+            </ng-select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label" for="harnessMaker">Harness Maker :</label>
+            <ng-select
+                       [(ngModel)]="harnessMakerId"
+                       [clearable]="false"
+                       [items]="this.data.harnessMakers"
+                       bindLabel="name"
+                       bindValue="id"
+                       id="harnessMaker"
+                       name="harnessMaker" placeholder="Select Harness Maker"
+                       required>
+            </ng-select>
+        </div>
+
+
+        <div class="form-group col-md-2">
+            <label class="form-label">number of Connectors:</label>
+            <core-touchspin [color]="'warning'"
+                            (onChange)="countChange($event)"
+                            [minValue]="2"
+                            [numberValue]="2"
+                            style="display: flex;justify-content: center;" required>
+            </core-touchspin>
+        </div>
+
+
+    </div>
+
+
+    <div class="d-flex justify-content-between">
+        <button   (click)="modernHorizontalPrevious()" class="btn btn-primary btn-prev" rippleEffect>
+            <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
+            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+        </button>
+           
+        <button [disabled]="!infosForm.valid" (click)="modernHorizontalNext()" class="btn btn-primary btn-next" rippleEffect>
+            <span class="align-middle d-sm-inline-block d-none">Next</span>
+            <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
+        </button>
+    </div>
+
+</form>

@@ -1,0 +1,11 @@
+@import '@core/scss/core.scss';
+@import './assets/scss/styles';
+
+// ngx-toastr css
+@import '~ngx-toastr/toastr.css';
+
+// extended toastr scss
+@import '~@core/scss/base/plugins/extensions/ext-component-toastr';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

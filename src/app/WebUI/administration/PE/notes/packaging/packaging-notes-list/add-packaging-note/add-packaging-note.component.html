@@ -1,0 +1,105 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #PackageForm="ngForm" (ngSubmit)="(PackageForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('add-packaging-note')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button">
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New Package Note</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+
+
+                    <div class="form-group">
+                        <label class="form-label" for="layer">layer</label>
+                        <input
+                                [(ngModel)]="this.packageNote.layer"
+                                aria-describedby="length"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="layer"
+                                name="layer"
+                                type="text"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="pn">PN</label>
+
+                        <textarea
+                                [(ngModel)]="this.packageNote.pn"
+                                aria-describedby="pn"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="pn"
+                                name="pn"
+                                rows="5"
+                                type="text">
+                        </textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="Qte">Qte</label>
+                        <input
+                                [(ngModel)]="this.packageNote.qte"
+                                aria-describedby="Qte"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="Qte"
+                                name="Qte"
+                                type="text"
+                        />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label" for="order">order</label>
+                        <input
+                                [(ngModel)]="this.packageNote.order"
+                                aria-describedby="length"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="order"
+                                name="order"
+                                type="number"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FPackageStatusRef="ngModel" [(ngModel)]="packageNote.status"
+                                   [class.error]="PackageForm.submitted && FPackageStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="PackageForm.submitted && FPackageStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FPackageStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <button (click)="submit(PackageForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('add-packaging-note')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

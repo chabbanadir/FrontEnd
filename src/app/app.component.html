@@ -1,0 +1,51 @@
+<!-- vertical-layout -->
+<ng-container *ngIf="coreConfig.layout.type === 'vertical'">
+  <vertical-layout></vertical-layout>
+</ng-container>
+<!-- / vertical-layout -->
+
+<!-- horizontal-layout -->
+<ng-container *ngIf="coreConfig.layout.type === 'horizontal'">
+  <horizontal-layout></horizontal-layout>
+</ng-container>
+<!-- / horizontal-layout -->
+
+<!-- theme customizer -->
+<core-sidebar
+  name="themeCustomizer"
+  class="customizer d-none d-md-block"
+  [invisibleOverlay]="true"
+  *ngIf="coreConfig.layout.customizer"
+>
+  <a
+    class="customizer-toggle d-flex align-items-center justify-content-center"
+    (click)="toggleSidebar('themeCustomizer')"
+  >
+    <span [data-feather]="'settings'" [class]="'spinner'"></span>
+  </a>
+  <core-theme-customizer></core-theme-customizer>
+</core-sidebar>
+<!-- / theme customizer -->
+
+
+
+<!--
+                                        E-mail:
+   [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]] █▀▀▀▀▀█ ▄█ ▄▄█▀▄█ █▀▀▀▀▀█
+   [:::::[                      ]:::::] █ ███ █ ▄█▀█▄ ▄▀  █ ███ █
+   [:::::[                      ]:::::] █ ▀▀▀ █ ▄ █ ▀  ▄▀ █ ▀▀▀ █
+   [:::::[                      ]:::::] ▀▀▀▀▀▀▀ ▀ ▀ ▀ ▀ ▀ ▀▀▀▀▀▀▀
+   [:::::[                      ]:::::] ▀█▀██▄▀▀▀█▀█▀▀▀ █▀ █ ▀▄▀
+   [:::::[ CODED BY MrAbdelaziz ]:::::] ▄  ▀  ▀ ▄█▄▄ ▀██▀▄█▄█ ▀▀█
+   [:::::[ Github:MrAbdelaziz   ]:::::] ▄█▄█ ▀▀ ▀▀▄█▀█▀▀▄▀▀ ▀ ▀▀
+   [:::::[                      ]:::::] █ █▄ ▀▀▄▀▄ ▄▄ ██▄ ▀ ▀  ██
+   [:::::[                      ]:::::] ▀ ▀▀▀▀▀▀█▀▄▄▀▀▀▄█▀▀▀██▀▀▀
+   [:::::[                      ]:::::] █▀▀▀▀▀█ ▀▀█▄▀ ▄ █ ▀ █  ▀█
+   [:::::[                      ]:::::] █ ███ █ █▀▀███▀▀▀██▀████▄
+   [:::::[                      ]:::::] █ ▀▀▀ █ ██▄ ▀ ▄▄▄▄▄█ ▀  █
+   [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]] ▀▀▀▀▀▀▀ ▀▀ ▀▀▀▀   ▀  ▀▀▀▀
+
+Name: PE_Project
+Version: 2.0
+COPYRIGHT © 2022 TE.com, All rights Reserved
+-->

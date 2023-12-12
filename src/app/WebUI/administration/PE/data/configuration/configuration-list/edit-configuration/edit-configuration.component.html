@@ -1,0 +1,164 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #ConfigurationForm="ngForm" (ngSubmit)="(ConfigurationForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('edit-configuration-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">EDIT <span
+                            style="color: #E98300;">{{configuration.name}}</span></h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+
+                    <div class="form-group">
+                        <label class="form-label" for="oem">OEM</label>
+                        <ng-select #emRef="ngModel"
+                                   [(ngModel)]="this.configuration.oem"
+                                   [class.error]="ConfigurationForm.submitted && emRef.invalid "
+                                   [clearable]="false"
+                                   [items]="ems"
+                                   [markFirst]="true"
+                                   [searchable]="false"
+                                   bindLabel="name"
+                                   id="oem"
+                                   name="oem"
+                                   placeholder="Select OEM"
+                                   required>
+                        </ng-select>
+                        <span *ngIf="ConfigurationForm.submitted && emRef.invalid " class="invalid-form">
+                          <small *ngIf="emRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                        <input
+                            #FConfigurationNameRef="ngModel"
+                            [(ngModel)]="configuration.name"
+                            [class.error]="ConfigurationForm.submitted && FConfigurationNameRef.invalid"
+                            (keyup)="filterByName($event)"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-edit-icon-default-uname"
+                            name="name"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="ConfigurationForm.submitted && FConfigurationNameRef.invalid" class="invalid-form">
+                        <small *ngIf="FConfigurationNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+                         </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="note">Configuration Note</label>
+                        <ng-select #noteRef="ngModel"
+                                   [(ngModel)]="this.configuration.note"
+                                   [class.error]="ConfigurationForm.submitted && noteRef.invalid "
+                                   [clearable]="false"
+                                   [items]="tmp_configNotes"
+                                   [searchable]="true"
+                                   bindLabel="name"
+                                   id="note" name="note" placeholder="Select Configuration Note"
+                                   required>
+                        </ng-select>
+                        <span *ngIf="ConfigurationForm.submitted && noteRef.invalid " class="invalid-form">
+                          <small *ngIf="noteRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file-edit">
+                            Picture
+                            <img [src]="this.preview || getCDN(configuration.picture) || 'assets/images/connectors/default-image.jpg'"
+                                 class="text-center font-medium-5 text-uppercase file-drop-zone"
+                                 style="height: 20%; width: 100%; object-fit: contain;"/>
+                        </label>
+                        <input (change)="uploadImage($event)"
+                               accept="image/png, image/jpeg, image/jpg"
+                               id="file-edit"
+                               style="display: none;"
+                               type="file"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="orientation">Orientation</label>
+                        <ng-select #OrientationRef="ngModel" [(ngModel)]="configuration.orientation"
+                                   [class.error]="ConfigurationForm.submitted && OrientationRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="orientation" name="orientation"
+                                   required>
+                            <ng-option [value]="orientation().Left">Left</ng-option>
+                            <ng-option [value]="orientation().Right">Right</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="ConfigurationForm.submitted && OrientationRef.invalid" class="invalid-form">
+                          <small *ngIf="OrientationRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="position">Position</label>
+                        <input
+                                [(ngModel)]="this.configuration.position"
+                                aria-describedby="position"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="position"
+                                name="position"
+                                type="number"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="length">length</label>
+                        <input
+                                [(ngModel)]="this.configuration.length"
+                                aria-describedby="length"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="length"
+                                name="length"
+                                type="number"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FConfigurationStatusRef="ngModel" [(ngModel)]="configuration.status"
+                                   [class.error]="ConfigurationForm.submitted && FConfigurationStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="ConfigurationForm.submitted && FConfigurationStatusRef.invalid" class="invalid-form">
+                          <small *ngIf="FConfigurationStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+
+
+                    </div>
+                    <button (click)="submit(ConfigurationForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('edit-configuration-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

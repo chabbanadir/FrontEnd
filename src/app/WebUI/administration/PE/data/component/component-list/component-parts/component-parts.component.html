@@ -1,0 +1,163 @@
+<!--
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <div  class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('component-parts-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel"> <span
+                            style="color: #E98300;">{{component.name}}</span> Parts</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="row d-flex align-items-end">
+                        <div class=" col-12">
+                            <label>Select PARTS</label>
+
+                            <div class="form-group">
+                                <ng-select
+                                        [items]="components"
+                                        [multiple]="true"
+                                        [closeOnSelect]="false"
+                                        [searchable]="false"
+                                        bindLabel="customer_PN"
+                                        placeholder="Select parts"
+                                        [(ngModel)]="childs"
+                                        name="childs"
+                                >
+                              &lt;!&ndash;      <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                        <span class="ng-value-label"> {{ item.customer_PN }} | {{ item.tE_PN }}</span>
+                                        <span class="ng-value-icon right" (click)="clear(item);detach(item)" aria-hidden="true">×</span>
+                                    </ng-template>
+&ndash;&gt;
+
+                                    <ng-template ng-option-tmp let-item="item" let-clear="clear">
+                                        <span class="ng-value-label"> CPN {{item.customer_PN}} | TE PN {{item.tE_PN}}</span>
+                                        <span class="ng-value-icon right" (click)="clear(item);detach(item)" aria-hidden="true"></span>
+                                    </ng-template>
+
+                                   &lt;!&ndash;     <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                            <span class="ng-value-label" >{{ item.customer_PN }}</span>
+                                            <span class="ng-value-icon right" (click)="clear(item);detach(item)" aria-hidden="true">×</span>
+                                        </ng-template>
+                                        <ng-template ng-option-tmp let-item="item" let-clear="clear">
+                                            <span class="ng-value-label" >{{ item.tE_PN }}</span>
+                                            <span class="ng-value-icon right" (click)="clear(item);detach(item)" aria-hidden="true">×</span>
+                                        </ng-template>&ndash;&gt;
+
+
+                                </ng-select>
+                                &lt;!&ndash;/
+
+                                user {
+                                firstname,
+                                lastename }
+
+                                Select Multi with group &ndash;&gt;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" (click)="SaveAll()" class="btn btn-primary mr-1" rippleEffect>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    &lt;!&ndash; Modal to edit new user Ends&ndash;&gt;
+</div>
+-->
+
+
+<div class="slideout-content">
+    <!-- Modal to edit new Ring starts-->
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+
+            <div  class="add-new-user modal-content pt-0">
+
+                <button
+                        (click)="toggleSidebar('component-parts-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">Parts</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+
+
+                    <form  (ngSubmit)="MyForm.form.valid" #MyForm="ngForm" class="invoice-repeater">
+                        <div *ngFor="let part of component.parts; let i = index" @heightIn>
+                            <div class="row d-flex align-items-end">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="component{{i}}">Component</label>
+
+                                        <ng-select  [items]="components" id="component{{i}}" name="component{{i}}" [(ngModel)]="this.part.fK_PartId" bindLabel="customer_PN"  bindValue="id" [clearable]="false"  [markFirst]="true" placeholder="Select Component" [searchable]="true"
+                                                    required>
+
+                                            <ng-template ng-label-tmp let-item="item">
+                                                {{item.customer_PN || item.tE_PN }}
+                                            </ng-template>
+
+                                            <ng-template ng-option-tmp let-item="item" >
+                                                {{item.customer_PN || item.tE_PN }}
+                                            </ng-template>
+
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <button class="btn btn-outline-danger " (click)="detach(part)"
+                                                rippleEffect>
+                                            <i data-feather="x" class="mr-25"></i>
+                                            <span>Delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+
+
+
+                                <button type="submit" (click)="SaveAll()" class="btn btn-primary mr-1" rippleEffect>Save</button>
+
+
+
+
+                                <button class="btn btn-outline-secondary" type="button" (click)="CreatePART()"
+                                        rippleEffect>
+                                    <i data-feather="plus" class="mr-25"></i>
+                                    <span>Add New</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal to edit new user Ends-->
+</div>

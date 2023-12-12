@@ -1,0 +1,305 @@
+<ng-container *ngIf="component.oem != null">
+<div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{this.component.name}} Details</h5>
+    <button type="button" class="close" (click)="this.activeModal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+    <form #ComponentForm="ngForm" (ngSubmit)="(ComponentForm.form.valid)" class="add-new-user pt-0">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="detail-pic">
+                            <img [src]="this.preview || 'assets/images/connectors/default-image.jpg'"
+                                 class="text-center font-medium-5 text-uppercase file-drop-zone"
+                                 style="height: 20%; width: 100%; object-fit: contain;"/>
+                        </label>
+                        <input (change)="uploadImage($event)"
+                               accept="image/png, image/jpeg, image/jpg"
+                               id="detail-pic"
+                               style="display: none;"
+                               type="file"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-label" for="orientation">Orientation</label>
+                            <ng-select #OrientationRef="ngModel" [(ngModel)]="component.orientation"
+                                       [clearable]="false" [searchable]="false" id="orientation" name="orientation">
+                                <ng-option [value]="orientation().Left">Left</ng-option>
+                                <ng-option [value]="orientation().Right">Right</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="oem">Oem</label>
+                            <input
+                                    [(ngModel)]="this.component.oem.name"
+                                    aria-describedby="basic-icon-default-uname2"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="oem"
+                                    name="oem"
+                                    disabled
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="category_name">Category Name</label>
+                            <input
+                                    [(ngModel)]="this.component.category.name"
+                                    aria-describedby="tE_PN"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="category_name"
+                                    name="category_name"
+                                    disabled
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                            <input
+                                    [(ngModel)]="component.name"
+                                    aria-describedby="basic-icon-default-uname2"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="basic-edit-icon-default-uname"
+                                    name="name"
+                                    disabled
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tE_PN">TE PN</label>
+                            <input
+                                    [(ngModel)]="this.component.tE_PN"
+                                    aria-describedby="tE_PN"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="tE_PN"
+                                    name="tE_PN"
+                                    disabled
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="cn_customer">CN PN</label>
+                            <input
+                                    [(ngModel)]="component.customer_PN"
+                                    aria-describedby="basic-icon-default-uname2"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="cn_customer"
+                                    name="cn_customer"
+                                    disabled
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="rev">Rev</label>
+                            <input
+                                    [(ngModel)]="this.component.rev"
+                                    aria-describedby="rev"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="rev"
+                                    name="rev"
+                                    type="text"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="position">Position</label>
+                            <input
+                                    [(ngModel)]="this.component.position"
+                                    aria-describedby="position"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="position"
+                                    name="position"
+                                    type="number"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="length">length</label>
+                            <input
+                                    [(ngModel)]="this.component.length"
+                                    aria-describedby="length"
+                                    aria-label="jdoe1"
+                                    class="form-control dt-uname"
+                                    id="length"
+                                    name="length"
+                                    type="number"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea
+                            [(ngModel)]="this.component.description"
+                            aria-describedby="Description"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="description"
+                            name="description"
+                            rows="5"
+                            type="text">
+                        </textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div *ngIf="component.category.hasConfig" class="form-group">
+                            <label class="form-label" for="configuration">Configuration</label>
+                            <ng-select
+                                    [(ngModel)]="this.component.fK_ConfigId"
+                                    [clearable]="true"
+                                    [items]="this.configurations"
+                                    [searchable]="true"
+                                    bindLabel="name"  bindValue="id" id="configuration"
+                                    name="configuration" placeholder="Select Configuration"
+                            >
+                            </ng-select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div *ngIf="component.category.hasCable" class="form-group">
+
+                                <label class="form-label" for="cables">Cables</label>
+                                <ng-select
+                                        [items]="cablesByOem"
+                                        [multiple]="true"
+                                        [searchable]="true"
+                                        id="cables"
+                                        name="cable"
+                                        bindLabel="customer_PN"
+                                        [compareWith]="compareCableFn"
+                                        placeholder="Select Part"
+                                        [(ngModel)]="this.cables">
+
+                                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                        <span class="ng-value-label">{{item.name}}</span>
+                                        <span class="ng-value-icon right" (click)="DeleteCable(item);clear(item)" aria-hidden="true">×</span>
+                                    </ng-template>
+
+                                    <ng-template ng-option-tmp let-item="item" >
+                                        <div (click)="AddCable(item);" > {{item.name }} </div>
+                                    </ng-template>
+
+                                </ng-select>
+
+                            <!--    <label class="form-label" for="cables">Cables</label>
+                                <ng-select
+                                        [items]="cables"
+                                        [multiple]="true"
+                                        [closeOnSelect]="false"
+                                        [searchable]="false"
+                                        id="cables"
+                                        name="cables"
+                                        bindLabel="name"
+                                        placeholder="Select Cables"
+                                        [(ngModel)]="this.component.cables">
+                                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                        <span class="ng-value-label"> {{ item.name }}</span>
+                                        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                    </ng-template>
+                                </ng-select>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-label" for="parts">Parts</label>
+                            <ng-select
+                                    [items]="components"
+                                    [multiple]="true"
+                                    id="parts"
+                                    name="part"
+                                    bindLabel="customer_PN"
+                                    [compareWith]="comparePartFn"
+                                    placeholder="Select Part"
+                                    [searchFn]="SearchForPart"
+                                    [(ngModel)]="this.parts">
+
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label">{{item.customer_PN}} - {{item.tE_PN }}</span>
+                                    <span class="ng-value-icon right" (click)="DeletePart(item);clear(item)" aria-hidden="true">×</span>
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item" >
+                                    <div (click)="AddPart(item);" > {{item.customer_PN}} - {{item.tE_PN }} </div>
+                                </ng-template>
+
+                            </ng-select>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+
+
+            <button
+                    (click)="this.activeModal.close()"
+                    class="btn btn-outline-secondary"
+                    rippleEffect
+                    type="reset"
+            >
+                Cancel
+            </button>
+
+            <button (click)="OnSubmit(ComponentForm)" class="btn btn-primary" rippleEffect type="submit">
+                Save
+            </button>
+
+
+        </div>
+
+
+
+    </form>
+</div>
+</ng-container>

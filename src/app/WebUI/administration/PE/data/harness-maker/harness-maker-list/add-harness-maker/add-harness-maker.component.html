@@ -1,0 +1,93 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #HarnessMakerForm="ngForm" (ngSubmit)="(HarnessMakerForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('add-harnessmaker-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New HarnessMaker</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="form-group">
+                        <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                        <input
+                            #FHarnessMakerNameRef="ngModel"
+                            [(ngModel)]="harnessmaker.name"
+                            [class.error]="HarnessMakerForm.submitted && FHarnessMakerNameRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-edit-icon-default-uname"
+                            name="name"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="HarnessMakerForm.submitted && FHarnessMakerNameRef.invalid" class="invalid-form">
+              <small *ngIf="FHarnessMakerNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="manufacturing_code">Manufacturing Code</label>
+                        <textarea [(ngModel)]="harnessmaker.manufacturing_code"
+                                  aria-describedby="manufacturing_code"
+                                  aria-label="jdoe1"
+                                  class="form-control dt-uname"
+                                  id="manufacturing_code"
+                                  name="manufacturing_code"
+                                  rows="10"
+                                  type="text">
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="bar_code">BARE CODE</label>
+                        <input
+                                [(ngModel)]="harnessmaker.bar_code"
+                                aria-describedby="bar_code"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="bar_code"
+                                name="bar_code"
+
+                                type="text"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FHarnessMakerStatusRef="ngModel" [(ngModel)]="harnessmaker.status"
+                                   [class.error]="HarnessMakerForm.submitted && FHarnessMakerStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="HarnessMakerForm.submitted && FHarnessMakerStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FHarnessMakerStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <button (click)="submit(HarnessMakerForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('add-harnessmaker-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

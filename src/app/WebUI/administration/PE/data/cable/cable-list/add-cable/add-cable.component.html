@@ -1,0 +1,137 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #CableForm="ngForm" (ngSubmit)="(CableForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('add-cable-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New Cable</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="form-group">
+                        <label class="form-label" for="oem">OEM</label>
+                        <ng-select #emRef="ngModel"
+                                   [(ngModel)]="this.cable.oem"
+                                   [class.error]="CableForm.submitted && emRef.invalid "
+                                   [clearable]="false"
+                                   [items]="ems"
+                                   [markFirst]="true"
+                                   [searchable]="false"
+                                   bindLabel="name"
+                                   id="oem" name="oem" placeholder="Select OEM"
+                                   required>
+                        </ng-select>
+                        <span *ngIf="CableForm.submitted && emRef.invalid " class="invalid-form">
+                          <small *ngIf="emRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                        <input
+                            #FCableNameRef="ngModel"
+                            [(ngModel)]="cable.name"
+                            [class.error]="CableForm.submitted && FCableNameRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-edit-icon-default-uname"
+                            name="name"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="CableForm.submitted && FCableNameRef.invalid" class="invalid-form">
+                          <small *ngIf="FCableNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="tE_PN">TE PN</label>
+                        <input
+                            #tE_PNRef="ngModel"
+                            [(ngModel)]="cable.tE_PN"
+                            [class.error]="CableForm.submitted && tE_PNRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            name="tE_PN"
+                            id="tE_PN"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="CableForm.submitted && tE_PNRef.invalid" class="invalid-form">
+                          <small *ngIf="tE_PNRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer_PN">Customer PN</label>
+                        <input
+                            #customer_PNRef="ngModel"
+                            [(ngModel)]="cable.customer_PN"
+                            [class.error]="CableForm.submitted && customer_PNRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            name="customer_PN"
+                            id="customer_PN"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="CableForm.submitted && customer_PNRef.invalid" class="invalid-form">
+                          <small *ngIf="customer_PNRef.errors.required" class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea
+                                [(ngModel)]="this.cable.description"
+                                aria-describedby="Description"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="description"
+                                name="description"
+                                rows="10"
+                                type="text">
+
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FCableStatusRef="ngModel" [(ngModel)]="cable.status"
+                                   [class.error]="CableForm.submitted && FCableStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="CableForm.submitted && FCableStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FCableStatusRef.errors.required"
+                     class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <button (click)="submit(CableForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('add-cable-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

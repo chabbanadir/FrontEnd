@@ -1,0 +1,21 @@
+<div class="card">
+  <img class="card-img-top" [src]="drawing.imagePath" alt="Drawing Image">
+  <div class="card-body">
+    <div class="drawing-details">
+      <h5 class="card-title">{{ drawing.tePartNumber }}</h5>
+      <p class="card-text">
+        <strong>Customer PN:</strong> {{ drawing.customerPN }}
+      </p>
+      <p class="card-text">
+        <strong>Project Number:</strong> {{ drawing.projectNumber }}
+      </p>
+      <p class="card-text">
+        <strong>OEM:</strong> {{ drawing.oem }}
+      </p>
+      <p class="card-text">
+        <strong>Harness Maker:</strong> {{ drawing.harnessMaker }}
+      </p>
+    </div>
+    <button (click)="navigateToDetails(drawing.id)" class="btn btn-primary">Details</button>
+  </div>
+</div>

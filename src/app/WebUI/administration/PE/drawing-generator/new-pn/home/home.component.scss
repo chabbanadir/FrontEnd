@@ -1,0 +1,58 @@
+@import '~@core/scss/angular/libs/datatables.component.scss';
+@import '~@core/scss/base/pages/app-user.scss';
+@import '~@core/scss/angular/libs/form-wizard.component.scss';
+@import '~@core/scss/angular/libs/select.component.scss';
+// ngx-toastr css
+@import '~ngx-toastr/toastr.css';
+// extended toastr scss
+@import '~@core/scss/base/plugins/extensions/ext-component-toastr';
+
+/*@import '~@core/scss/angular/libs/drag-drop.component.scss';
+@import '@core/scss/base/pages/app-chat.scss';
+@import '@core/scss/base/pages/app-chat-list.scss';
+@import '@core/scss/base/components/include'; // Components includes*/
+/*
+
+// Chat Application
+.chat-application {
+  .chat-sidebar,
+  .sidebar-content,
+  .chat-user-sidebar,
+  .active-user-profile-sidebar,
+  .chat-sidebar-wrapper {
+    height: 100%;
+  }
+  .chat-sidebar {
+    border-right: 1px solid $border-color;
+  }
+
+  .sidebar-content {
+    min-width: auto;
+  }
+  .chat-profile-sidebar {
+    top: 0;
+    left: 0;
+  }
+  .sidebar {
+    position: unset;
+  }
+}
+
+// Dark Layout
+.dark-layout {
+  .chat-application {
+    .chat-sidebar {
+      background-color: $theme-dark-card-bg !important;
+      border-right: 1px solid $theme-dark-border-color;
+    }
+  }
+}
+
+.toast-close-button {
+  line-height: 1;
+}
+.fieldset-border {
+  border: 1px groove #ddd !important;
+  box-shadow: 0px 0px 0px 0px #000;
+  min-height: 20rem;
+}*/

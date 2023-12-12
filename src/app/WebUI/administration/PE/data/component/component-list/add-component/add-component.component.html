@@ -1,0 +1,304 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #ComponentForm="ngForm" (ngSubmit)="(ComponentForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('edit-component-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new Component</h5>
+                </div>
+
+                <div class="modal-body flex-grow-1">
+
+                    <div class="form-group">
+                        <label class="form-label" for="oem">OEM</label>
+                        <ng-select #emRef="ngModel"
+                                   [(ngModel)]="this.component.fK_OemId"
+                                   [class.error]="ComponentForm.submitted && emRef.invalid "
+                                   [clearable]="false"
+                                   [items]="ems"
+                                   [markFirst]="true"
+                                   [searchable]="false"
+                                   (change)="filterSelects()"
+                                   bindLabel="name"
+                                   bindValue="id"
+                                   id="oem" name="oem" placeholder="Select OEM"
+                                   required>
+                        </ng-select>
+                        <span *ngIf="ComponentForm.submitted && emRef.invalid " class="invalid-form">
+                          <small *ngIf="emRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="category">Category</label>
+                        <ng-select #categoryRef="ngModel"
+                                   [(ngModel)]="this.component.fK_CategoryId"
+                                   [class.error]="ComponentForm.submitted && categoryRef.invalid "
+                                   [clearable]="false"
+                                   [items]="categories"
+                                   [searchable]="true"
+                                   bindLabel="name"
+                                   bindValue="id"
+                                   id="category"
+                                   name="category" placeholder="Select Category"
+                                   required>
+                        </ng-select>
+                        <span *ngIf="ComponentForm.submitted && categoryRef.invalid " class="invalid-form">
+                          <small *ngIf="categoryRef.errors.required"
+                                 class="form-text text-danger">This field is required!</small>
+                        </span>
+                    </div>
+
+<!--
+                    <div *ngIf="component.fK_CategoryId ? hasConfig(component.fK_CategoryId) : false" class="form-group">
+                        <label class="form-label" for="configuration">Configuration</label>
+                        <ng-select
+                                [(ngModel)]="this.component.fK_ConfigId"
+                                [clearable]="true"
+                                [items]="this.configurations"
+                                [markFirst]="true"
+                                [searchable]="true" bindLabel="name"  bindValue="id" id="configuration"
+                                name="configuration" placeholder="Select Configuration"
+                        >
+                        </ng-select>
+                    </div>
+-->
+
+<!--
+                    <div *ngIf="component.fK_CategoryId ? hasCable(component.fK_CategoryId) : false " class="form-group">
+       &lt;!&ndash;                 <label class="form-label" for="cable">Cable</label>
+                        <ng-select [(ngModel)]="this.component.fK_CableId" [clearable]="true" [items]="temp_cables" [markFirst]="true"
+                                   [searchable]="false" bindLabel="name" bindValue="id" id="cable"
+                                   name="cable" placeholder="Select Cable">
+                        </ng-select>
+
+&ndash;&gt;
+                        &lt;!&ndash; Select Multi  &ndash;&gt;
+                            <ng-select
+                                    [items]="temp_cables"
+                                    [multiple]="true"
+                                    [closeOnSelect]="false"
+                                    [searchable]="false"
+                                    name="cable"
+                                    bindLabel="name"
+                                    placeholder="Select Cable"
+                                    [(ngModel)]="this.component.cables"
+                            >
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label"> {{ item.name }}</span>
+                                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                </ng-template>
+                            </ng-select>
+                            &lt;!&ndash;/ Select Multi  &ndash;&gt;
+
+
+
+                    </div>
+-->
+
+                    <div class="form-group">
+                        <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                        <input
+                            #FComponentNameRef="ngModel"
+                            [(ngModel)]="component.name"
+                            [class.error]="ComponentForm.submitted && FComponentNameRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-edit-icon-default-uname"
+                            name="name"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="ComponentForm.submitted && FComponentNameRef.invalid" class="invalid-form">
+              <small *ngIf="FComponentNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="tE_PN">TE PN</label>
+                        <input
+                                [(ngModel)]="this.component.tE_PN"
+                                aria-describedby="tE_PN"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="tE_PN"
+                                name="tE_PN"
+                                type="text"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer_PN">Customer PN</label>
+                        <input
+                                [(ngModel)]="this.component.customer_PN"
+                                aria-describedby="customer_PN"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="customer_PN"
+                                name="customer_PN"
+                                type="text"
+                        />
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label class="form-label" for="pdM_LINK_PN">PDM</label>
+                        <input
+                                [(ngModel)]="this.component.PpdM_LINK_PN"
+                                aria-describedby="pdM_LINK_PN"
+                                aria-label="jdoe1"
+                                class="form-control dt-uname"
+                                id="pdM_LINK_PN"
+                                name="pdM_LINK_PN"
+                                type="text"
+                        />
+                    </div>-->
+
+                               <div class="form-group">
+                                        <label class="form-label" for="pdM_LINK_PN">PDM LINK PN</label>
+                                        <input
+                                                [(ngModel)]="this.component.pdM_LINK_PN"
+                                                aria-describedby="pdM_LINK_PN"
+                                                aria-label="jdoe1"
+                                                class="form-control dt-uname"
+                                                id="pdM_LINK_PN"
+                                                name="pdM_LINK_PN"
+                                                type="text"
+                                        />
+                                    </div>
+                <!--                    <div class="form-group">
+                                        <label class="form-label" for="rev">Rev</label>
+                                        <input
+                                                [(ngModel)]="this.component.rev"
+                                                aria-describedby="rev"
+                                                aria-label="jdoe1"
+                                                class="form-control dt-uname"
+                                                id="rev"
+                                                name="rev"
+                                                type="text"
+                                        />
+                                    </div>-->
+                <!--                    <div class="form-group">
+                                        <label class="form-label" for="description">Description</label>
+
+                                        <textarea
+                                                [(ngModel)]="this.component.description"
+                                                aria-describedby="Description"
+                                                aria-label="jdoe1"
+                                                class="form-control dt-uname"
+                                                id="description"
+                                                name="description"
+                                                rows="10"
+                                                type="text">
+                                        </textarea>
+                                    </div>-->
+                <!--          <div class="form-group">
+                        <label for="edit-pic">
+                            Picture
+                            <img [src]="this.preview || 'assets/images/connectors/default-image.jpg'"
+                                 class="text-center font-medium-5 text-uppercase file-drop-zone"
+                                 style="height: 20%; width: 100%; object-fit: contain;"/>
+                        </label>
+                        <input (change)="uploadImage($event)"
+                               accept="image/png, image/jpeg, image/jpg"
+                               id="edit-pic"
+                               style="display: none;"
+                               type="file"/>
+                    </div>-->
+<!--                                    <div class="form-group">
+                                        <label class="form-label" for="orientation">Orientation</label>
+                                        <ng-select #OrientationRef="ngModel" [(ngModel)]="component.orientation"
+                                                   [class.error]="ComponentForm.submitted && OrientationRef.invalid"
+                                                   [clearable]="false" [searchable]="false" id="orientation" name="orientation"
+                                                   required>
+                                            <ng-option [value]="orientation().Left">Left</ng-option>
+                                            <ng-option [value]="orientation().Right">Right</ng-option>
+                                        </ng-select>
+
+                                        <span *ngIf="ComponentForm.submitted && OrientationRef.invalid" class="invalid-form">
+                                          <small *ngIf="OrientationRef.errors.required" class="form-text text-danger">This field is required!</small>
+                                        </span>
+                                    </div>-->
+                <!--
+                                    <div class="form-group">
+                                        <label class="form-label" for="position">Position</label>
+                                        <input
+                                                [(ngModel)]="this.component.position"
+                                                aria-describedby="position"
+                                                aria-label="jdoe1"
+                                                class="form-control dt-uname"
+                                                id="position"
+                                                name="position"
+                                                type="number"
+                                        />
+                                    </div>
+                -->
+                <!--
+                                    <div class="form-group">
+                                        <label class="form-label" for="length">length</label>
+                                        <input
+                                                [(ngModel)]="this.component.length"
+                                                aria-describedby="length"
+                                                aria-label="jdoe1"
+                                                class="form-control dt-uname"
+                                                id="length"
+                                                name="length"
+                                                type="number"
+                                        />
+                                    </div>
+                -->
+
+                    <div class="form-group">
+                        <label class="form-label" for="showIn">Show in</label>
+                        <ng-select [(ngModel)]="component.showIn"
+                                   [clearable]="false" [searchable]="false"
+                                   id="showIn"
+                                   name="showIn"
+                                   required>
+                            <ng-option [value]="0">None</ng-option>
+                            <ng-option [value]="1">Customer Drawing</ng-option>
+                            <ng-option [value]="2">Production Drawing</ng-option>
+                            <ng-option [value]="3">CD & PD</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FComponentStatusRef="ngModel" [(ngModel)]="component.status"
+                                   [class.error]="ComponentForm.submitted && FComponentStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="ComponentForm.submitted && FComponentStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FComponentStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <div>
+                        <button (click)="submit(ComponentForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                            Submit
+                        </button>
+                        <button
+                                (click)="toggleSidebar('edit-component-sidebar')"
+                                class="btn btn-outline-secondary"
+                                rippleEffect
+                                type="reset"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@import '~@core/scss/base/pages/app-user.scss';
+@import '~@core/scss/angular/libs/select.component.scss';
+@import '~@core/scss/angular/libs/datatables.component.scss';
+
+
+// ngx-toastr css
+@import '~ngx-toastr/toastr.css';
+// extended toastr scss
+@import '~@core/scss/base/plugins/extensions/ext-component-toastr';
+
+.datatable-scroll {
+  width: auto !important;
+}
+
+
+.toast-close-button {
+  line-height: 1;
+}

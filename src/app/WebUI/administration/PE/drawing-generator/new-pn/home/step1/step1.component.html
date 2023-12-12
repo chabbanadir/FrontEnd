@@ -1,0 +1,32 @@
+<div class="content-header">
+    <h5 class="mb-0">Setup</h5>
+</div>
+
+
+<div class="row justify-content-center">
+    <div class="form-group col-md-4">
+        <label class="form-label" for="PartNumber">TE Part Number</label>
+        <input
+            #partNumberRef="ngModel"
+            [(ngModel)]="partNumber"
+            [class.error]="!partNumberRef.valid && partNumberRef.touched"
+            class="form-control"
+            id="PartNumber"
+            name="PartNumber"
+            placeholder="TEXXXXXXXXXXXXX"
+            required
+            type="text"
+        />
+    </div>
+</div>
+
+<div class="d-flex justify-content-between">
+    <button class="btn btn-outline-secondary btn-prev" disabled rippleEffect>
+        <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
+        <span class="align-middle d-sm-inline-block d-none">Previous</span>
+    </button>
+    <button [disabled]="!partNumberRef.valid" (click)="modernHorizontalNext()" class="btn btn-primary btn-next" rippleEffect>
+        <span class="align-middle d-sm-inline-block d-none">Next</span>
+        <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
+    </button>
+</div>

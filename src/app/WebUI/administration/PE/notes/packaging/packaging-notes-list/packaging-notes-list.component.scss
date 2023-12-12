@@ -1,0 +1,17 @@
+@import '~@core/scss/base/pages/app-user.scss';
+@import '~@core/scss/angular/libs/select.component.scss';
+@import '~@core/scss/angular/libs/datatables.component.scss';
+
+.datatable-scroll {
+  width: auto !important;
+}
+
+
+.toast-close-button {
+  line-height: 1;
+}
+
+
+.datatable-body-cell-label{
+  width: 100%;
+}

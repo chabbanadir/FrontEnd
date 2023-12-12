@@ -1,0 +1,340 @@
+<!--
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+
+        <section class="modern-horizontal-wizard">
+            <div class="bs-stepper wizard-modern modern-wizard-example" id="stepper">
+                <div class="bs-stepper-header">
+                    <div class="step" data-target="#checkpn">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="search"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Setup</span>
+                                <span class="bs-stepper-subtitle">Setup PN</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#config-info">
+                        <button class="step-trigger">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="file-text"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Config</span>
+                                <span class="bs-stepper-subtitle">Config details</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#sides">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="cpu"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Sides</span>
+                                <span class="bs-stepper-subtitle">Sides Details</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#sketch">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="pen-tool"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Sketch</span>
+                                <span class="bs-stepper-subtitle">Sketch Generator</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#cdrawing">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="link"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Customer</span>
+                                <span class="bs-stepper-subtitle">Customer Drawing</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#pdrawing">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="link"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Production</span>
+                                <span class="bs-stepper-subtitle">Production Drawing</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="line">
+                        <i class="font-medium-2" data-feather="chevron-right"></i>
+                    </div>
+
+                    <div class="step" data-target="#smartassembly">
+                        <button class="step-trigger" type="button">
+                            <span class="bs-stepper-box">
+                                <i class="font-medium-3" data-feather="link"></i>
+                            </span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-subtitle">SMART-Assy</span>
+                            </span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="bs-stepper-content">
+
+                    
+                    <div class="content" id="checkpn">
+                        <app-step1></app-step1>
+                    </div>
+
+                    <div class="content" id="config-info">
+                        <app-step2 *ngIf="getConfig().partNumber"></app-step2>
+                    </div>
+
+                    <div class="content" id="sides">
+                        <app-step3 *ngIf="getConfig().projectNumber"></app-step3>
+                    </div>
+
+                    <div class="content" id="sketch">
+                        <app-step4 *ngIf="getConfig().left || getConfig().right"></app-step4>
+                    </div>
+
+                    <div class="content" id="cdrawing">
+                        <app-step5 *ngIf="getConfig().cd_bom.length > 0"></app-step5>
+                    </div>
+
+                    <div class="content" id="pdrawing">
+                        <app-step6 *ngIf="getConfig().pd_bom.length > 0"></app-step6> 
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+-->
+<!--
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+
+        <div id="stepper" class="bs-stepper vertical vertical-wizard-example">
+            <div class="bs-stepper-header">
+                <div class="step" data-target="#Setup">
+                    <button type="button" class="step-trigger">
+                        <span class="bs-stepper-box">1</span>
+                        <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Setup</span>
+                                <span class="bs-stepper-subtitle">PN Details</span>
+                            </span>
+                    </button>
+                </div>
+                <div class="step" data-target="#Config">
+                    <button type="button" class="step-trigger">
+                        <span class="bs-stepper-box">2</span>
+                        <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Config</span>
+                        <span class="bs-stepper-subtitle">Config Details</span>
+                      </span>
+                    </button>
+                </div>
+                <div class="step" data-target="#Sides">
+                    <button type="button" class="step-trigger">
+                        <span class="bs-stepper-box">3</span>
+                        <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Sides</span>
+                        <span class="bs-stepper-subtitle">Sides Details</span>
+                      </span>
+                    </button>
+                </div>
+                <div class="step" data-target="#Sketch">
+                    <button type="button" class="step-trigger">
+                        <span class="bs-stepper-box">4</span>
+                        <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Sketch</span>
+                        <span class="bs-stepper-subtitle">Drawing</span>
+                      </span>
+                    </button>
+                </div>
+                <div class="step" data-target="#Customer">
+                    <button type="button" class="step-trigger">
+                        <span class="bs-stepper-box">5</span>
+                        <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">Customer</span>
+                        <span class="bs-stepper-subtitle"> Customer Drawing</span>
+                      </span>
+                    </button>
+                </div>
+                &lt;!&ndash;
+                                    <div class="step" data-target="#Production">
+                                        <button type="button" class="step-trigger">
+                                            <span class="bs-stepper-box">5</span>
+                                            <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title">Production</span>
+                                        <span class="bs-stepper-subtitle"> Production Drawing</span>
+                                      </span>
+                                        </button>
+                                    </div>
+                &ndash;&gt;
+            </div>
+            <div class="bs-stepper-content" style="margin: auto;">
+                <div id="Setup" class="content">
+                    <app-step1></app-step1>
+                </div>
+
+                <div id="Config" class="content">
+                    <app-step2 *ngIf="getConfig().partNumber"></app-step2>
+                </div>
+
+                <div id="Sides" class="content">
+                    <app-step3 *ngIf="getConfig().projectNumber"></app-step3>
+                </div>
+
+                <div id="Sketch" class="content">
+                    <app-step4 *ngIf="getConfig().left || getConfig().right"></app-step4>
+                </div>
+
+                <div id="Customer" class="content">
+                    <app-step5 *ngIf="getConfig().cd_bom.length > 0"></app-step5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+-->
+
+
+<!--
+<div class="content-area-wrapper container-xxl p-0">
+-->
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-body">
+                <div class="body-content-overlay"></div>
+                <!-- Main chat area -->
+                    <div id="stepper" class="chat-app-window bs-stepper modern-horizontal-wizard">
+                        <div class="bs-stepper-header">
+                            <div class="step" data-target="#Setup">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">1</span>
+                                    <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Setup</span>
+                                <span class="bs-stepper-subtitle">PN Details</span>
+                                    </span>
+                                </button>
+                            </div>
+                            
+                            <div class="step" data-target="#Config">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">2</span>
+                                    <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Config</span>
+                                <span class="bs-stepper-subtitle">Config Details</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="step" data-target="#Sides">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">3</span>
+                                    <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Sides</span>
+                                <span class="bs-stepper-subtitle">Sides Details</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="step" data-target="#Sketch">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">4</span>
+                                    <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Sketch</span>
+                                <span class="bs-stepper-subtitle">Drawing</span>
+                                </span>
+                                </button>
+                            </div>
+                            <div class="step" data-target="#Customer">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">5</span>
+                                    <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Customer</span>
+                                <span class="bs-stepper-subtitle"> Customer Drawing</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="step" data-target="#Production">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-box">6</span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title">Production</span>
+                                        <span class="bs-stepper-subtitle"> Production Drawing</span>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="bs-stepper-content" >
+                            <div id="Setup" class="content">
+                                <app-step1></app-step1>
+                            </div>
+
+                            <div id="Config" class="content">
+                                <app-step2 *ngIf="getConfig().partNumber"></app-step2>
+                            </div>
+
+                            <div id="Sides" class="content">
+                                <app-step3 *ngIf="getConfig().projectNumber"></app-step3>
+                            </div>
+
+                            <div id="Sketch" class="content">
+                                <app-step4 *ngIf="sides_Loaded()"></app-step4>
+                            </div>
+
+                            <div id="Customer" class="content">
+                                <app-step5 *ngIf="cd_allTablesLoaded()"></app-step5>
+                            </div>
+
+                            <div id="Production" class="content">
+                                <app-step6 *ngIf="pd_allTablesLoaded()"></app-step6>
+                            </div>
+                        </div>
+                    </div>
+                <!--/ Main chat area -->
+            </div>
+        </div>
+<!--
+</div>-->

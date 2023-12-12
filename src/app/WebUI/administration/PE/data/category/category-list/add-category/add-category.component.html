@@ -1,0 +1,88 @@
+<div class="slideout-content">
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+        <div class="modal-dialog">
+            <form #CategoryForm="ngForm" (ngSubmit)="(CategoryForm.form.valid)" class="add-new-user modal-content pt-0">
+                <button
+                        (click)="toggleSidebar('add-category-sidebar')"
+                        aria-label="Close"
+                        class="close"
+                        data-dismiss="modal"
+                        type="button"
+                >
+                    ×
+                </button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="form-group">
+                        <label class="form-label" for="basic-edit-icon-default-uname">Name</label>
+                        <input
+                            #FCategoryNameRef="ngModel"
+                            [(ngModel)]="category.name"
+                            [class.error]="CategoryForm.submitted && FCategoryNameRef.invalid"
+                            aria-describedby="basic-icon-default-uname2"
+                            aria-label="jdoe1"
+                            class="form-control dt-uname"
+                            id="basic-edit-icon-default-uname"
+                            name="name"
+                            required
+                            type="text"
+                        />
+                        <span *ngIf="CategoryForm.submitted && FCategoryNameRef.invalid" class="invalid-form">
+              <small *ngIf="FCategoryNameRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-control-primary custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="this.category.hasNote" class="custom-control-input"  name="hasNote" id="Id2hasNote" />
+                            <label class="custom-control-label" for="Id2hasNote">has Note ?</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="custom-control custom-control-primary custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="this.category.hasCable" class="custom-control-input"  name="hasCable" id="Id2hasCable" />
+                            <label class="custom-control-label" for="Id2hasCable">has Cable ?</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-control-primary custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="this.category.hasConfig" class="custom-control-input"  name="hasConfig" id="Id2hasConfig" />
+                            <label class="custom-control-label" for="Id2hasConfig">has Config ?</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status</label>
+                        <ng-select #FCategoryStatusRef="ngModel" [(ngModel)]="category.status"
+                                   [class.error]="CategoryForm.submitted && FCategoryStatusRef.invalid"
+                                   [clearable]="false" [searchable]="false" id="status" name="status"
+                                   required>
+                            <ng-option [value]="status().Active">Active</ng-option>
+                            <ng-option [value]="status().Inactive">Inactive</ng-option>
+                        </ng-select>
+
+                        <span *ngIf="CategoryForm.submitted && FCategoryStatusRef.invalid" class="invalid-form">
+              <small *ngIf="FCategoryStatusRef.errors.required" class="form-text text-danger">This field is required!</small>
+            </span>
+
+
+                    </div>
+                    <button (click)="submit(CategoryForm)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                        Submit
+                    </button>
+                    <button
+                            (click)="toggleSidebar('add-category-sidebar')"
+                            class="btn btn-outline-secondary"
+                            rippleEffect
+                            type="reset"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
