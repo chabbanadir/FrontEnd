@@ -23,6 +23,7 @@ export class Step5Component implements OnInit {
   ngOnInit(): void {
 
 
+    
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.js';
 
     Step5Component.pdf = new TEPDF('cd-container', '/assets/drawings/customer/A3 CD.pdf', {
@@ -39,6 +40,34 @@ export class Step5Component implements OnInit {
     });
   }
    
+  base64ToBlob(base64: string, format: string = 'image/png'): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+ 
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+ 
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+ 
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to convert base64 to blob'));
+          }
+        }, format);
+      };
+ 
+      img.onerror = (error) => {
+        reject(error);
+      };
+ 
+      img.src = base64;
+    });
+  }
 
 
   exportToExcel() {
@@ -71,7 +100,15 @@ export class Step5Component implements OnInit {
     HomeComponent.modernHorizontalPrevious("step4");
   }
 
-  modernHorizontalNext() {
+  async modernHorizontalNext() {
+    try {
+      const blob = await this.base64ToBlob(HomeComponent.config.cd_picture, 'image/png');
+      HomeComponent.dataSaving.image_drawing = new File([blob], 'image.png', { type: 'image/png' });
+    } catch (error) {
+      console.error('Failed to convert image:', error);
+    }
     HomeComponent.modernHorizontalNext();
   }
+
+  
 }

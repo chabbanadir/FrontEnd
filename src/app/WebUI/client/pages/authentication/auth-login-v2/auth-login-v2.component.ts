@@ -77,9 +77,9 @@ export class AuthLoginV2Component implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-    }
+    // if (this.loginForm.invalid) {
+    //   return;
+    // }
 
     // Login
     this.loading = true;
@@ -88,7 +88,7 @@ export class AuthLoginV2Component implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this._router.navigate([this.returnUrl]);
+          this._router.navigate(["PE/drawingGenerator/newPN"]);
         },
         error => {
           this.error = error;

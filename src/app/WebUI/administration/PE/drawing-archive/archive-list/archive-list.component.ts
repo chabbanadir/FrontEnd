@@ -1,115 +1,130 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataSavingModel } from 'app/Domain/Entities/DrawingGenerator/DataSaving.model';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 // Include styles in your component
 import '@swimlane/ngx-datatable/themes/material.scss'; // Choose a theme
+import { ArchiveService } from '../services/archive.service';
+import { OemService } from '../../data/oem/services/oem.service';
+import { FilterByOEMPipe } from './filter-by-oem.pipe';
 
 @Component({
   selector: 'app-archive-list',
   templateUrl: './archive-list.component.html',
   styleUrls: ['./archive-list.component.scss']
 })
-export class ArchiveListComponent implements OnInit {
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+export class ArchiveListComponent implements OnInit{
 
-  titile = "hello eeeeeeeeeworld ";
+  filterOEM: string = ''; // Set the initial value to an empty string
+  selectedOEMName: string = ''; // This property will hold the selected OEM name
+  uniqueOEMs: { id: string, name: string }[] = []; 
+  searchTerm: string = '';
+  oemNames: { [id: string]: string } = {};
+  hideObsolete: boolean = false; // Default to show all items
+  editObsolete: boolean = false;
+  originalIsObsoleteValues: boolean[] = [];
 
-;
+
+  currentPage: number = 1;
+  itemsPerPage: number = 12;
+
+
+
+  id_dialog:any;
+  display_dialog:boolean = false;
+  drawingDisplay: any[] = []
   drawing : DataSavingModel[] =[]
-  test : number[] =  [1,2,3,4,5,6];
-  c_pdf: File;
-  image_drawing: File;
-  p_pdf: File;
-  constructor() {
-    this.c_pdf = new File(['Sample c_pdf content'], 'c_pdf.pdf', { type: 'application/pdf' });
-    this.image_drawing = new File(['Sample image_drawing content'], 'image_drawing.jpg', { type: 'image/jpeg' });
-    this.p_pdf = new File(['Sample p_pdf content'], 'p_pdf.pdf', { type: 'application/pdf' });
-    
-  
-   /* // Initialize the drawing object properties
-    this.drawing.project_number = "dhdh";
-    this.drawing.connectors = [
-      {
-        id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-        id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-        id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-        PDMLink_connector: "1452728CA-A.ASM",
-        side: "LEFT",
-        position: 1
-      },
-      {
-        id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-        id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-        id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-        PDMLink_connector: "1452728CA-A.ASM",
-        side: "RIGHT",
-        position: 1
-      }
-    ];
-    this.drawing.pinning = [
-      {
-        pinA: "A",
-        pinB: "B"
-      }
-    ];
-    this.drawing.te_pn = "hhf";
-    this.drawing.cpn = "dhdh";
-    this.drawing.id_oem = "6feba1ab-85ae-ec11-b887-005056873c66";
-    this.drawing.id_harnesmaker = "9d56741c-87ae-ec11-b887-005056873c66";
-    this.drawing.bom = [
-      {
-        Id: "6Q0 035 576",
-        Customer_PN: "6Q0 035 576",
-        TE_PN: "1452728-1",
-        Rev: "E",
-        Description: "PLUG HOUSING CODE A BLACK, 1WAY, FAKRA 2",
-        Qte: 2,
-        Count: 1,
-        Type: "CD_And_PD",
-        UM: "PC",
-        PDMLINK: "1452728CA-A.ASM"
-      },
-      {
-        Id: "N 106 471 02",
-        Customer_PN: "N 106 471 02",
-        TE_PN: "1719792-5",
-        PDMLINK: null,
-        Rev: "A",
-        Description: "SUBASSY PLUG FAKRA, HF",
-        Qte: 2,
-        Count: 2,
-        Type: "CD_And_PD",
-        UM: "PC"
-      }
-    ];
-    this.drawing.leads = [
-      {
-        c_length: 2261,
-        length: 2231,
-        lead: "L1",
-        from: "LEFT_26cee45e-87ae-ec11-b887-005056873c66_0",
-        to: "RIGHT_26cee45e-87ae-ec11-b887-005056873c66_0",
-        fromPort: "A",
-        toPort: "B",
-        id_cable: "c2a868b8-86ae-ec11-b887-005056873c66",
-        p_length: 2245
-      }
-    ];
-    // Create sample File objects with dummy data
-    this.drawing.c_pdf = new File(['Sample c_pdf content'], 'c_pdf.pdf', { type: 'application/pdf' });
-    this.drawing.image_drawing = new File(['Sample image_drawing content'], 'image_drawing.jpg', { type: 'image/jpeg' });
-    this.drawing.p_pdf = new File(['Sample p_pdf content'], 'p_pdf.pdf', { type: 'application/pdf' });*/
-  }
+
+  filterData: any;
+  Oem: any;
+  oem: string;
+  constructor(private archiveService : ArchiveService,private oemService: OemService) {}
   
 
-  ngOnInit(): void {
+  ngOnInit(): void{
+  
+    this.archiveService.getAllDrawings().subscribe((data: any[]) => {
+      this.drawingDisplay = data.reverse();
+    });
+    this.oemService.GetAllAsync().then(response => {
+      this.filterData = response; // Assuming that the API response is an array of drawing data
+      this.updateDrawingOEM();
+    }).catch(error => {
+      console.log(error);
+    });
+
     
-    
-    console.log(JSON.stringify(this.drawing));
 
   }
 
+  updateDrawingOEM() {
+    // Assuming your API response provides ID and name for OEMs
+    this.uniqueOEMs = Array.from(new Set(this.filterData.map(item => ({ id: item.id, name: item.name }))));
+  }
+
+  handlesendId(id: any){
+    this.id_dialog = id
+  }
+  handlesendDisplayBool(bool:boolean){
+    this.display_dialog=bool
+  }
   
 
+    // Filter function to be used in ngFor
+    filterItems() {
+
+      const searchTermLower = this.searchTerm.toLowerCase(); // Convert the searchTerm to lowercase once
+      let filteredItems = this.drawingDisplay.filter(item => {
+        if (this.hideObsolete) {
+          return (
+            (item.te_pn.toLowerCase().includes(searchTermLower) ||
+             item.cpn.toLowerCase().includes(searchTermLower) ||
+             item.project_number.toLowerCase().includes(searchTermLower)) &&
+            item.isObsolete !== true
+          );
+        } else {
+          return (
+            (item.te_pn.toLowerCase().includes(searchTermLower) ||
+             item.cpn.toLowerCase().includes(searchTermLower) ||
+             item.project_number.toLowerCase().includes(searchTermLower)
+          ));
+        }
+      });
+    
+      // Apply the filterByOEM pipe here
+      const filterByOEMPipe = new FilterByOEMPipe(); // Create an instance of the filterByOEM pipe
+      filteredItems = filterByOEMPipe.transform(filteredItems, this.filterOEM); // Apply the filter
+    
+      return filteredItems;
+    }
+
+    toggleEditObsolete() {
+      if (this.editObsolete) {
+        // If "Edit Obsolete" checkbox is checked, backup and set isObsolete to false for all items
+        this.originalIsObsoleteValues = this.drawingDisplay.map(item => item.isObsolete);
+        this.drawingDisplay.forEach(item => (item.isObsolete = false));
+      } else {
+        // If "Edit Obsolete" checkbox is unchecked, restore the original isObsolete values
+        this.drawingDisplay.forEach((item, index) => (item.isObsolete = this.originalIsObsoleteValues[index]));
+      }
+    }
+  
+
+    nextPage() {
+      if ((this.currentPage * this.itemsPerPage) < this.filterItems().length) {
+        this.currentPage++;
+      }
+    }
+    
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    }
+
+    filterChange() {
+      this.currentPage = 1;
+    }
+
+    
 }

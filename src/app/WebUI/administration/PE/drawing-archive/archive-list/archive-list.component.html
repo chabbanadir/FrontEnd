@@ -1,2 +1,55 @@
-<p>hello</p>
-<app-card-archive></app-card-archive>
+<div class="card">
+    <h3 class="card-header">Filter By </h3>
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                            <select [(ngModel)]="filterOEM" class="form-control" id="oemSelect" (ngModelChange)="filterChange()">
+                                <option value="" hidden selected>Filter by OEM</option>
+                                <option value="" class="autocomplete-item">All OEMs</option>
+                                <option *ngFor="let oem of uniqueOEMs" [value]="oem.id" class="autocomplete-item">
+                                    {{ oem.name }}
+                                </option>
+                            </select>
+                    </div>
+                    <div class="filter-obsolete col-12 col-md-3" *ngIf="!editObsolete">
+                        <label class="custom-checkbox" >
+                            <input type="checkbox" class="check" [(ngModel)]="hideObsolete" (ngModelChange)="filterChange()">
+                            <span class="checkmark"></span>
+                            Hide Obsolete
+                        </label>
+                    </div>
+                    <div [ngClass]="{ 'filter-obsolete col-12 col-md-2 offset-md-3': editObsolete, 'filter-obsolete col-12 col-md-2': true }" *ngIf="!hideObsolete">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="check" [(ngModel)]="editObsolete" (change)="toggleEditObsolete()" (ngModelChange)="filterChange()">
+                            <span class="checkmark"></span>
+                            Edit Obsolete
+                        </label>
+                    </div>
+                    
+                    <div [ngClass]="{ 'col-12 col-md-3 offset-md-2': hideObsolete, 'col-12 col-md-3': true }">
+                        <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Search" (ngModelChange)="filterChange()">
+                    </div>
+                </div>
+        </div>
+</div>
+<div class="container">
+    <app-card-archive *ngFor="let item of filterItems() | slice:(currentPage - 1) * itemsPerPage:currentPage * itemsPerPage"
+                      [drawing]="item" (sendId)="handlesendId($event)" (sendDisplayBool)="handlesendDisplayBool($event)">
+    </app-card-archive>
+    <app-dialog *ngIf="display_dialog" [idDrawing]="id_dialog" (sendDisplayBool)="handlesendDisplayBool($event)" class="frontDialog"></app-dialog>
+</div>
+<div class="pagination" *ngIf="this.filterItems().length > 0 ;  else noDrawingsMessage">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <img src="./../../../../../../assets/left-arrow.png" alt="Previous">
+    </button>
+    <span class="pagination-text">Page {{ currentPage }}</span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= filterItems().length">
+      <img src="./../../../../../../assets/right-arrow.png" alt="Next">
+    </button>
+</div>
+
+<ng-template #noDrawingsMessage>
+    <div class="pagination pagination-text">
+        <p>No drawings match your criteria.</p>
+    </div>
+</ng-template>

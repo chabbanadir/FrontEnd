@@ -10,7 +10,7 @@ export const environment = {
   //apiUrl: 'http://localhost:4000'
   apiUrl: 'https://localhost:5001/api',
   cdnUrl: 'https://localhost:5001/images/'
-
+  
   // apiUrl: 'http://162.109.85.69:80/api',
   // cdnUrl: 'http://162.109.85.69:80/images/'
 };// colect data dans le temps reel apres analyses 

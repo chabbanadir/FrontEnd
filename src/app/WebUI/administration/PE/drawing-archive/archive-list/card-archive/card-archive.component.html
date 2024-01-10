@@ -1,0 +1,24 @@
+<div class="card" style="width: 18rem;">
+    <img src="{{drawing.image_drawing}}" class="card-img-top" alt="Card Image">
+    <p class="floating {{getTextColorClass(drawing.rev)}}">{{drawing.rev}}</p>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Project Number: {{drawing.project_number}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">TE PN: {{drawing.te_pn}}</h6>
+            <p class="card-subtitle mb-2 text-muted">C PN: {{drawing.cpn}}</p>
+            <p class="card-text">Oem: {{oem}}</p>
+            <div *ngIf="drawing.rev == 'A'; else modifiedBy">
+                <p class="card-text">CreatedBy: {{currentUser.userName}}</p>
+                <p class="card-text smallP">CreatedAt: {{ dateTime | date:'short' }}</p>
+            </div>
+            <button class="btn btn-primary" id="showDialog" (click)="showDialog() ; sendDisplay()">Details</button>
+            <button class="btn btn-secondary" *ngIf="drawing.isObsolete != true || drawing.isObsolete != 1 " (click)="editDrawing() ; setUpdateBool()">Edit</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #modifiedBy>
+    <p class="card-text">ModifiedBy: {{currentUser.userName}}</p>
+    <p class="card-text">ModifiedAt: {{ dateTime | date:'short' }}</p>
+</ng-template>
+

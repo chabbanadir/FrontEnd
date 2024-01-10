@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSavingModel } from 'app/Domain/Entities/DrawingGenerator/DataSaving.model';
+import { OemService } from '../../../data/oem/services/oem.service';
+import { EditService } from '../../../edit.service';
+import { Router } from '@angular/router';
+import { Step6Component } from '../../../drawing-generator/new-pn/home/step6/step6.component';
+import { ArchiveService } from '../../services/archive.service';
+import { AuthenticationService } from 'app/Identity/service';
 
 @Component({
   selector: 'app-card-archive',
@@ -8,167 +14,67 @@ import { DataSavingModel } from 'app/Domain/Entities/DrawingGenerator/DataSaving
 })
 export class CardArchiveComponent implements OnInit {
 
-  drawing : DataSavingModel = new DataSavingModel();
-
-  c_pdf : File
-  image_drawing : File
-  p_pdf : File
-  constructor() { 
-    this.c_pdf = new File(['Sample c_pdf content'], 'c_pdf.pdf', { type: 'application/pdf' });
-    this.image_drawing = new File(['Sample image_drawing content'], 'image_drawing.jpg', { type: 'image/jpeg' });
-    this.p_pdf = new File(['Sample p_pdf content'], 'p_pdf.pdf', { type: 'application/pdf' });
-    
-    this.drawing = {
-      project_number: "dhdh",
-      isObsolete: true,
-      connectors: [
-        {
-          id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-          id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-          id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-          PDMLink_connector: "1452728CA-A.ASM",
-          side: "LEFT",
-          position: 1,
-        },
-        {
-          id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-          id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-          id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-          PDMLink_connector: "1452728CA-A.ASM",
-          side: "RIGHT",
-          position: 1
-        }
-      ],
-      pinning: [
-        {
-          pinA: "A",
-          pinB: "B"
-        }
-      ],
-      te_pn: "hhf",
-      cpn: "dhdh",
-      id_oem: "6feba1ab-85ae-ec11-b887-005056873c66",
-      id_harnesmaker: "9d56741c-87ae-ec11-b887-005056873c66",
-      bom: [
-        {
-          Id: "6Q0 035 576",
-          Customer_PN: "6Q0 035 576",
-          TE_PN: "1452728-1",
-          Rev: "E",
-          Description: "PLUG HOUSING CODE A BLACK, 1WAY, FAKRA 2",
-          Qte: 2,
-          Count: 1,
-          Type: "CD_And_PD",
-          UM: "PC",
-          PDMLINK: "1452728CA-A.ASM"
-        },
-        {
-          Id: "N 106 471 02",
-          Customer_PN: "N 106 471 02",
-          TE_PN: "1719792-5",
-          PDMLINK: null,
-          Rev: "A",
-          Description: "SUBASSY PLUG FAKRA, HF",
-          Qte: 2,
-          Count: 2,
-          Type: "CD_And_PD",
-          UM: "PC"
-        }
-      ],
-      leads: [
-        {
-          c_length: 2261,
-          length: 2231,
-          lead: "L1",
-          from: "LEFT_26cee45e-87ae-ec11-b887-005056873c66_0",
-          to: "RIGHT_26cee45e-87ae-ec11-b887-005056873c66_0",
-          fromPort: "A",
-          toPort: "B",
-          id_cable: "c2a868b8-86ae-ec11-b887-005056873c66",
-          p_length: 2245
-        }
-      ],
-      c_pdf: this.c_pdf,
-      image_drawing: this.image_drawing,
-      p_pdf: this.p_pdf
-    },
-    {
-      project_number: "dhdh",
-      isObsolete: true,
-      connectors: [
-        {
-          id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-          id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-          id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-          PDMLink_connector: "1452728CA-A.ASM",
-          side: "LEFT",
-          position: 1
-        },
-        {
-          id_connector: "26cee45e-87ae-ec11-b887-005056873c66",
-          id_config: "2d567a29-87ae-ec11-b887-005056873c66",
-          id_note: "c817f4e3-86ae-ec11-b887-005056873c66",
-          PDMLink_connector: "1452728CA-A.ASM",
-          side: "RIGHT",
-          position: 1
-        }
-      ],
-      pinning: [
-        {
-          pinA: "A",
-          pinB: "B"
-        }
-      ],
-      te_pn: "hhf",
-      cpn: "dhdh",
-      id_oem: "6feba1ab-85ae-ec11-b887-005056873c66",
-      id_harnesmaker: "9d56741c-87ae-ec11-b887-005056873c66",
-      bom: [
-        {
-          Id: "6Q0 035 576",
-          Customer_PN: "6Q0 035 576",
-          TE_PN: "1452728-1",
-          Rev: "E",
-          Description: "PLUG HOUSING CODE A BLACK, 1WAY, FAKRA 2",
-          Qte: 2,
-          Count: 1,
-          Type: "CD_And_PD",
-          UM: "PC",
-          PDMLINK: "1452728CA-A.ASM"
-        },
-        {
-          Id: "N 106 471 02",
-          Customer_PN: "N 106 471 02",
-          TE_PN: "1719792-5",
-          PDMLINK: null,
-          Rev: "A",
-          Description: "SUBASSY PLUG FAKRA, HF",
-          Qte: 2,
-          Count: 2,
-          Type: "CD_And_PD",
-          UM: "PC"
-        }
-      ],
-      leads: [
-        {
-          c_length: 2261,
-          length: 2231,
-          lead: "L1",
-          from: "LEFT_26cee45e-87ae-ec11-b887-005056873c66_0",
-          to: "RIGHT_26cee45e-87ae-ec11-b887-005056873c66_0",
-          fromPort: "A",
-          toPort: "B",
-          id_cable: "c2a868b8-86ae-ec11-b887-005056873c66",
-          p_length: 2245
-        }
-      ],
-      c_pdf: this.c_pdf,
-      image_drawing: this.image_drawing,
-      p_pdf: this.p_pdf
-    }
-  }
+  @Input() drawing : any ;
+  display:boolean = true;
+  @Output() sendId = new EventEmitter<any>();
+  @Output() sendDisplayBool = new EventEmitter<any>();
+  Oem: any;
+  oem: string;
+  details:any;
+  currentUser: any;
+  dateTime: Date = new Date();
+  constructor(private oemService: OemService,private editService:EditService, private router: Router, private archiveService : ArchiveService, private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
+    console.log(JSON.stringify(this.drawing))
+    this.oemService.GetByIdAsync(this.drawing.id_oem).then(response => {
+      this.Oem = response;
+      this.updateDrawingOem();
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.archiveService.getById(this.drawing.id)
+    .subscribe((response: any) => {
+      this.details = response;
+    });
   }
 
+  async updateDrawingOem() {
+    const data = await this.Oem;
+    this.oem = data.name; 
+  }
+  showDialog(): void {
+    this.sendId.emit(this.drawing.id);
+    console.log("this.drawing" + JSON.stringify(this.drawing))
+  }
+
+  sendDisplay(){
+    this.sendDisplayBool.emit(this.display);
+
+  }
+
+  editDrawing(){
+    this.editService.setSharedData(this.details);
+    Step6Component.idDrawing = this.drawing.id
+    this.router.navigate(['/PE/drawingGenerator/newPN']);
+  }
+  
+  setUpdateBool(){
+    this.editService.setUpdateBool();
+  }
+
+  getTextColorClass(rev) {
+    if (rev.match(/^[Aa]/)) {
+        return 'green';
+    } else if (rev.match(/^[Bb]/)) {
+        return 'orange';
+    } else {
+        return 'red'; // You can provide a default class or no class if needed.
+    }
+}
+
+  getDetails(){
+  }
 }

@@ -1,0 +1,29 @@
+/* YourComponent.css or global styles.css */
+.autocomplete-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .autocomplete-item {
+    padding: 8px;
+    cursor: pointer;
+    background-color: #ffffff;
+    transition: background-color 0.2s;
+  }
+  
+  .autocomplete-item:hover {
+    background-color: #ffebcc; /* Light orange background on hover */
+  }
+  
+  .autocomplete-item:hover{
+    color: #E98300; /* Text becomes orange on hover */
+  }
+  
+  .autocomplete-item span {
+    transition: color 0.2s;
+  }
+  

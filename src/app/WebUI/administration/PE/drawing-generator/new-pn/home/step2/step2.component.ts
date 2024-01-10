@@ -68,6 +68,11 @@ infos: any;
 
   // Private
   private _unsubscribeAll: Subject<any>;
+  static cpn: any;
+  static project_number: any;
+  static id_harnesmaker: any;
+  static id_oem: any;
+  static countConnectors: any;
 
 
   constructor(private _drawingService: DrawingService, private _coreSidebarService: CoreSidebarService, private http: HttpClient,   private _infoService: InfoService, private infoData: InfoService, private _oemService: OemService) {
@@ -86,6 +91,14 @@ infos: any;
         response => {
           this.data = response;
         });
+
+         this.customerPN = Step2Component.cpn
+         this.projectNumber = Step2Component.project_number
+         this.harnessMakerId = Step2Component.id_harnesmaker
+         this.oemId = Step2Component.id_oem.toLowerCase()
+         this.countSides = Step2Component.countConnectors
+
+         console.log(" this.oemId" +  this.oemId)
 
   }
 

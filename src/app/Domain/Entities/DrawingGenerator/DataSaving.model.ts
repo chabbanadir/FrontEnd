@@ -2,9 +2,11 @@ import { DrawingConnectorModel } from "./DrawingConnector.model";
 import { BomModel } from "./Bom.model";
 import { LeadsModel } from "./Leads.model";
 import { PinningSavingModel } from "./PinningSaving.model";
+import { AuditableEntity } from "app/Domain/Common/AuditableEntity";
 
-export class DataSavingModel {
+export class DataSavingModel extends AuditableEntity {
 
+    id:string;
     te_pn: string;
     cpn: string;
     project_number : string
@@ -13,10 +15,13 @@ export class DataSavingModel {
     connectors: DrawingConnectorModel[];
     leads: LeadsModel[];
     pinning: PinningSavingModel[];
-    bom: BomModel[];
-    c_pdf: File;
-    p_pdf: File;
-    image_drawing: File;
+    bom: any[];
+    c_pdf: any;
+    p_pdf: any;
+    smartAssembly:any;
+    image_drawing: any;
+    Rev: string;
     isObsolete: boolean;
+
 
 }

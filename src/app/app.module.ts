@@ -14,7 +14,7 @@ import { coreConfig } from 'app/app-config';
 import { AppComponent } from 'app/app.component';
 import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from "./Identity/helpers";
 import {LayoutModule} from "./WebUI/layout/layout.module";
-
+import { CommonModule } from "@angular/common";
 
 
 const appRoutes: Routes = [
@@ -63,7 +63,7 @@ const appRoutes: Routes = [
     // App modules
     LayoutModule,
    // SampleModule
-
+   CommonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

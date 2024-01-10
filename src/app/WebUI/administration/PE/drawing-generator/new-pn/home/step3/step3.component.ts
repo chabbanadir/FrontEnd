@@ -133,7 +133,6 @@ export class Step3Component implements OnInit,OnDestroy {
       this.rightConnector.position = item.position
       this.connectors.push(this.rightConnector)
     }
-    HomeComponent.dataSaving.connectors = this.connectors
     HomeComponent.modernHorizontalNext();
   }
 
@@ -143,18 +142,20 @@ export class Step3Component implements OnInit,OnDestroy {
 
     this.valid = (cl + rl) == HomeComponent.config.countSides;
   }
-
   async updateLeft(i) {
-    await this._drawingService.GetParts(this.left[i].id).then((res: any) => { // Success
-      this.left[i] = res;
-    });
+    const updatedComponent = await this._drawingService.GetParts(this.left[i].id);
+    if (updatedComponent) {
+      this.left[i] = updatedComponent;
+    }
   }
-
+  
   async updateRight(i) {
-    await this._drawingService.GetParts(this.right[i].id).then((res: any) => { // Success
-      this.right[i] = res;
-    });
+    const updatedComponent = await this._drawingService.GetParts(this.right[i].id);
+    if (updatedComponent) {
+      this.right[i] = updatedComponent;
+    }
   }
+  
 
 
 /*  getCDN(pic: PictureModel)

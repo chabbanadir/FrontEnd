@@ -87,7 +87,7 @@
             <core-touchspin [color]="'warning'"
                             (onChange)="countChange($event)"
                             [minValue]="2"
-                            [numberValue]="2"
+                            [numberValue]="countSides || 2"
                             style="display: flex;justify-content: center;" required>
             </core-touchspin>
         </div>

@@ -53,12 +53,17 @@ export class AuthenticationService {
    * @returns user
    */
   login(email: string, password: string) {
+    const formData = new FormData();
+    formData.append('Email', email);
+    formData.append('Password', password);
     return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+      .post<any>(`${environment.apiUrl}/Auth`,  formData)
       .pipe(
         map(user => {
           // login successful if there's a jwt token in the response
-          if (user && user.token) {
+          console.log("1 user logs : "+  JSON.stringify(user));
+          if (user.currentUser) {
+            console.log("2 user currentUserlogs : "+ user.currentUser);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
 
@@ -68,13 +73,13 @@ export class AuthenticationService {
                 'You have successfully logged in as an ' +
                   user.role +
                   ' user.',
-                '👋 Welcome, ' + user.firstName + '!',
+                '👋 Welcome, ' + user.unique_name + '!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );
             }, 2500);
 
             // notify
-            this.currentUserSubject.next(user);
+            this.currentUserSubject!.next(user);
           }
 
           return user;

@@ -25,6 +25,7 @@ export class ProjectModel{
     BOM: BomModel[] = [];
     BOMC: BomCModel[] = [];
     
+
     BOMCD: BomCDModel[] = [];
     BOMP: BomPModel[] = [];
     cablename: string;
@@ -45,6 +46,7 @@ export class ProjectModel{
     pd_lengths: any;
 
     packaging: any;
-    CableTypeData: any[] = [];
 
+
+    CableTypeData :any[]= [];
 }

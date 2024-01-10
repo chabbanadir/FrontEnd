@@ -405,7 +405,7 @@ export class TEPDF {
 
                 HomeComponent.dataSaving.c_pdf = file; // Store the file in HomeComponent.config.CD_File
 
-                const image = new Image();
+               /* const image = new Image();
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.width = doc.internal.pageSize.getWidth(); // Set the canvas size based on the page size
@@ -425,7 +425,7 @@ export class TEPDF {
                         // Store the File object in your dataSaving variable
                         HomeComponent.dataSaving.image_drawing = drawingImg;
                     }
-                }, 'image/png');
+                }, 'image/png');*/
                 doc.save(fileName);
             }
         });

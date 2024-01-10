@@ -28,7 +28,7 @@ export const menu: CoreMenu[] = [
         id: 'drawin',
         title: 'Drawing Archive',
         type: 'item',
-        icon: 'pen-tool',
+        icon: 'archive',
         classes: 'ml-1',
         url: 'PE/drawingArchive',
       },
@@ -53,7 +53,7 @@ export const menu: CoreMenu[] = [
             title: "Categories",
             translate: 'MENU.PE_Department.DATA.CHILD.CATEGORIES',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             classes: 'ml-1',
             url: 'PE/data/categories',
@@ -63,7 +63,7 @@ export const menu: CoreMenu[] = [
             title: "Configurations",
             translate: 'MENU.PE_Department.DATA.CHILD.CONFIGURATION',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             classes: 'ml-1',
             url: 'PE/data/configurations',
@@ -73,7 +73,7 @@ export const menu: CoreMenu[] = [
             title: 'Cables',
             translate: 'MENU.PE_Department.DATA.CHILD.CABLES',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             classes: 'ml-1',
             url: 'PE/data/cables',
@@ -83,7 +83,7 @@ export const menu: CoreMenu[] = [
           //   title: 'Part Numbers',
           // //  translate: 'MENU.PE_Department.DATA.CHILD.INFOS',
           //   type: 'item',
-          //   role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+          //   roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
           //   icon: 'corner-down-right',
           //   classes: 'ml-1',
           //   url: 'PE/data/infos',
@@ -93,7 +93,7 @@ export const menu: CoreMenu[] = [
             title: "Components",
             translate: 'MENU.PE_Department.DATA.CHILD.COMPONENTS',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             classes: 'ml-1',
             url: 'PE/data/components',
@@ -103,7 +103,7 @@ export const menu: CoreMenu[] = [
             title: 'Customers Notes',
             translate: 'MENU.PE_Department.DATA.CHILD.HARNESS',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             classes: 'ml-1',
             url: 'PE/data/harnessmakers'
@@ -122,7 +122,7 @@ export const menu: CoreMenu[] = [
             title: 'Configs Notes',
             translate: 'MENU.PE_Department.NOTES.CHILD.CONFIGURATIONS',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             url: 'PE/notes/configurations'
           },
@@ -131,7 +131,7 @@ export const menu: CoreMenu[] = [
             title: 'CD Notes',
             translate: 'MENU.PE_Department.NOTES.CHILD.CUSTOMERDRAWING',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             url: 'PE/notes/customer'
           },
@@ -140,7 +140,7 @@ export const menu: CoreMenu[] = [
             title: 'PD Notes',
             translate: 'MENU.PE_Department.NOTES.CHILD.PRODUCTIONDRAWING',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             url: 'PE/notes/production'
           },
@@ -150,7 +150,7 @@ export const menu: CoreMenu[] = [
             title: 'Packaging ',
             translate: 'MENU.PE_Department.NOTES.CHILD.PACKAGING',
             type: 'item',
-            role: ['Admin'], // To set multiple role: ['Admin', 'Client']
+            roles: ['Admin'], // To set multiple roles: ['Admin', 'Client']
             icon: 'corner-down-right',
             url: 'PE/notes/Packaging'
           }

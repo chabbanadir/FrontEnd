@@ -61,8 +61,7 @@ const routes: Routes = [
     Step5Component,
     Step6Component,
     Step7Component,
-    Step8Component
-  ],
+    Step8Component],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

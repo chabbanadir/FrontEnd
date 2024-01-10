@@ -1,5 +1,5 @@
 import { BomModel } from './../../../../../../../Domain/Entities/DrawingGenerator/Bom.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as pdfjsLib from "pdfjs-dist";
 import {HomeComponent} from "../home.component";
 import {TEPDF} from "./ext/TEPDF";
@@ -13,18 +13,21 @@ import * as XLSX from 'xlsx';
 import * as fs from 'file-saver';
 import { DrawingService } from '../../services/drawing.service';
 import { DataSavingModel } from 'app/Domain/Entities/DrawingGenerator/DataSaving.model';
+import { Router } from '@angular/router';
+import { ArchiveService } from 'app/WebUI/administration/PE/drawing-archive/services/archive.service';
 @Component({
   selector: 'app-step6',
   templateUrl: './step6.component.html',
   styleUrls: ['./step6.component.scss']
 })
-export class Step6Component implements OnInit {
+export class Step6Component implements OnInit, OnDestroy {
   Category: CategoryModel[];
   cable : CableModel[];
-  public static pdf: TEPDF;
-  
+  public static pdf: TEPDF;  
   fileName= 'ExcelSheet.xlsx';
-  constructor(private drawingService : DrawingService) {
+  static updateBool: boolean = false;
+  static idDrawing: any;
+  constructor(private drawingService : DrawingService, private archiveService : ArchiveService, private router:Router) {
 
   }
 
@@ -33,6 +36,10 @@ export class Step6Component implements OnInit {
  
 
   static config: ProjectModel = new ProjectModel();
+
+  ngOnDestroy(): void {
+    Step6Component.idDrawing = null
+  }
   ngOnInit(): void {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.js';
     Step6Component.pdf = new TEPDF('pd-container', '/assets/drawings/prod/A2 PD.pdf', {
@@ -430,19 +437,39 @@ export class Step6Component implements OnInit {
   }
 
   modernHorizontalNext() {
-    
     const dataToBeSent: DataSavingModel = HomeComponent.dataSaving
+    setTimeout(() => {
 
-    this.drawingService.createDrawingData(dataToBeSent).subscribe(
+    if(Step6Component.updateBool === false){
+    this.archiveService.createDrawingData(dataToBeSent).subscribe(
       (response) => {
         console.log('Data sent successfully:', response);
         // Handle the response from the backend as needed
+        this.router.navigate(['/PE/drawingArchive']);
+
       },
       (error) => {
         console.error('Error sending data:', error);
         // Handle errors
       }
     );
+  }else{
+    HomeComponent.dataSaving.id = Step6Component.idDrawing;
+    this.archiveService.updateDrawingData(dataToBeSent,Step6Component.idDrawing).subscribe(
+      (response) => {
+        console.log('Data sent successfully:', response);
+        // Handle the response from the backend as needed
+        this.router.navigate(['/PE/drawingArchive']);
+
+      },
+      (error) => {
+        console.error('Error sending data:', error);
+        // Handle errors
+      }
+    );
+  }
+
+}, 2000);
     HomeComponent.modernHorizontalNext();
   }
 }

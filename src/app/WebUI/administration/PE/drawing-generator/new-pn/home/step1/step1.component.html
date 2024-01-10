@@ -16,6 +16,27 @@
             placeholder="TEXXXXXXXXXXXXX"
             required
             type="text"
+            (ngModelChange)="inputChange()"
+        />
+          <!-- Autocomplete dropdown -->
+        <ul *ngIf="isAutocompleteOpen && filteredData.length > 0" class="autocomplete-list">
+            <li *ngFor="let item of filteredData" (click)="selectItem(item)" class="autocomplete-item" >{{ item.te_pn }}</li>
+        </ul>
+        
+    </div>
+    <div class="form-group col-md-4" *ngIf="updateBool">
+        <label class="form-label" for="Rev">Rev</label>
+        <!---->
+        <input
+            #RevRef="ngModel"
+            [(ngModel)]="Rev"
+            [class.error]="!RevRef.valid && RevRef.touched"
+            class="form-control"
+            id="Rev"
+            name="Rev"
+            placeholder="Ax - B"
+            required
+            type="text"
         />
     </div>
 </div>
@@ -25,7 +46,7 @@
         <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
         <span class="align-middle d-sm-inline-block d-none">Previous</span>
     </button>
-    <button [disabled]="!partNumberRef.valid" (click)="modernHorizontalNext()" class="btn btn-primary btn-next" rippleEffect>
+    <button [disabled]="!partNumberRef.valid || (updateBool && !Rev) || partNumberExists" (click)="modernHorizontalNext()" class="btn btn-primary btn-next" rippleEffect>
         <span class="align-middle d-sm-inline-block d-none">Next</span>
         <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
     </button>

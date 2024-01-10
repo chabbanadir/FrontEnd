@@ -1,0 +1,166 @@
+/* Center the dialog */
+.dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background overlay */
+    z-index: 999;
+}
+
+/* Style the dialog content */
+.dialog-content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Set the width to 80% of the viewport width */
+    height: 100%; /* Set the height to 80% of the viewport height */
+    max-width: 70%;
+    max-height: 80%;
+    overflow-y: auto; /* Add a vertical scrollbar if content overflows */
+    text-align: center;
+    background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);}
+
+.dialog-content table {
+    box-shadow: #555;
+}
+
+.dialog-content img {
+    max-width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dialog-header{
+    position: relative;
+}
+/* Style the header image */
+.dialog-header img {
+    max-width: 100%;
+    margin-bottom: 15px;
+    border-radius: 30px
+}
+
+/* Style the labels and text */
+.label {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #000;
+    display: inline-block; /* Change to inline-block to keep them on the same line */
+    width: 150px; /* Adjust the width as needed to control the spacing between labels and content */
+}
+
+p {
+    display: inline-block; /* Display h5 and p elements on the same line */
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Style the tables */
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    //box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+}
+
+caption {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #E98300;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 3px solid #000;
+}
+
+th {
+    background-color: #E98300;
+    color: #000;
+}
+.responsive-table {
+    width: 100%; /* Ensure it doesn't overflow the width of the dialog */
+}
+
+
+/* Style the buttons in the footer */
+.dialog-footer button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dialog-footer button:hover {
+    background-color: #0056b3;
+}
+
+.close-button {
+    position: absolute; /* Position the "X" button absolutely within the dialog */
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #000; /* Change the color to your preference */
+    width: 24px;
+}
+
+/* Style the scrollbar (webkit-based browsers) */
+.dialog-content::-webkit-scrollbar {
+    width: 10px; /* Adjust the width as needed */
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar thumb color */
+    border-radius: 5px; /* Thumb border radius */
+}
+
+.dialog-content::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Scrollbar track color */
+}
+
+.floating {
+    position: absolute;
+    top: 0;
+    right: 0;
+    //color: #01ff01;
+    width: 24px;
+    //border: 3px solid #01ff01;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: large;
+    padding: 5px 15px;
+}
+
+.green {
+    color: #01ff01;
+    border: 3px solid #01ff01;
+}
+
+.orange {
+    color: orange;
+    border: 3px solid orange;
+}
+
+.red {
+    color: red;
+    border: 3px solid red;
+}

@@ -63,29 +63,28 @@
                 <ng-container *ngIf="this.currentUser">
                     <div class="user-nav d-sm-flex d-none">
             <span class="user-name font-weight-bolder"
-            >{{ this.currentUser.firstName }} {{ this.currentUser.lastName }}</span
-            ><span class="user-status">{{ this.currentUser.role }}</span>
+            >{{ this.currentUser.userName }}</span>
                     </div>
                     <span class="avatar"
                     ><img
                             alt="avatar"
                             class="round"
                             height="40"
-                            src="assets/images/portrait/small/{{ this.currentUser.avatar }}"
+                            src="assets/images/avatars/2-small.png"
                             width="40"/><span class="avatar-status-online"></span
                     ></span>
                 </ng-container>
             </a>
             <div aria-labelledby="navbarUserDropdown" class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-            <!--                <a [routerLink]="['/pages/profile']" ngbDropdownItem
+                           <a (click)="profilInfos()" ngbDropdownItem
                 ><span [class]="'mr-50'" [data-feather]="'user'"></span> Profile</a
-                ><a [routerLink]="['/apps/email']" ngbDropdownItem
+                ><!--<a [routerLink]="['/apps/email']" ngbDropdownItem
             ><span [class]="'mr-50'" [data-feather]="'mail'"></span> Inbox</a
             ><a [routerLink]="['/apps/chat']" ngbDropdownItem
             ><span [class]="'mr-50'" [data-feather]="'message-square'"></span> Chats</a
-            >
+            >-->
                 <div class="dropdown-divider"></div>
-              <a [routerLink]="['/pages/account-settings']" ngbDropdownItem
+             <!-- <a [routerLink]="['/pages/account-settings']" ngbDropdownItem
                 ><span [class]="'mr-50'" [data-feather]="'settings'"></span> Settings</a
                 >-->
                 <a (click)="logout()" ngbDropdownItem><span [class]="'mr-50'" [data-feather]="'power'"></span>
@@ -94,4 +93,41 @@
         </li>
         <!--/ User Dropdown -->
     </ul>
+
+    <div *ngIf="displayProfilInfos" class="overlay ">
+        <div class="centered-profile-form">
+        <button class="close-button" (click)="closeProfile()">
+          <img src="./../../../../../../../../assets/close.png" />
+        </button>
+      
+        <form (ngSubmit)="submitForm()" #profileForm="ngForm">
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <label for="username">User Name:</label>
+                            <input type="text" id="userName" name="userName" class="userName" [(ngModel)]="currentUser.userName" required />
+                          </div>
+
+                      
+                          <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" class="email"[(ngModel)]="currentUser.email" required />
+                          </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label for="image">Image:</label>
+                            <input type="file" id="image" name="image" (change)="onFileSelected($event)" />
+                            <img *ngIf="true" [src]="'assets/images/avatars/2-small.png'" alt="Selected Image" class="image" (click)="changeImage()" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+      
+          <button type="submit" [disabled]="!profileForm.valid">Save</button>
+        </form>
+      </div>
+      </div>
+      
 </div>

@@ -43,6 +43,7 @@ import { PinningSavingModel } from 'app/Domain/Entities/DrawingGenerator/Pinning
 import { Step1Component } from '../step1/step1.component';
 import { Console } from 'console';
 import { stringify } from 'querystring';
+import { DrawingConnectorModel } from 'app/Domain/Entities/DrawingGenerator/DrawingConnector.model';
 @Component({
     selector: 'app-step4',
     templateUrl: './step4.component.html',
@@ -99,6 +100,8 @@ export class Step4Component implements OnInit , AfterViewInit {
     ringTongTubes: RingModel[];
     ringTongs: RingModel[] = RingFakeData.data;
 
+    connectors:DrawingConnectorModel[] = [];
+
     // private
     private _unsubscribeAll: Subject<any>;
     
@@ -115,6 +118,32 @@ export class Step4Component implements OnInit , AfterViewInit {
 
         this.sketch = new Sketch();
         this._unsubscribeAll = new Subject();
+        console.log("HomeComponent.config.left" + JSON.stringify(HomeComponent.config.left))
+        console.log("HomeComponent.config.right" + JSON.stringify(HomeComponent.config.right))
+        for (const item of HomeComponent.config.left) {
+            const leftConnector = new DrawingConnectorModel();
+            leftConnector.id_connector = item.id;
+            leftConnector.id_config = item.config.id;
+            leftConnector.id_note = item.config.note.id;
+            leftConnector.PDMLink_connector = item.pdM_LINK_PN;
+            leftConnector.side = "LEFT";
+            leftConnector.position = item.position;
+            this.connectors.push(leftConnector);
+        }
+        
+        for (const item of HomeComponent.config.right) {
+            const rightConnector = new DrawingConnectorModel();
+            rightConnector.id_connector = item.id;
+            rightConnector.id_config = item.config.id;
+            rightConnector.id_note = item.config.note.id;
+            rightConnector.PDMLink_connector = item.pdM_LINK_PN;
+            rightConnector.side = "RIGHT";
+            rightConnector.position = item.position;
+            this.connectors.push(rightConnector);
+        }
+        
+        HomeComponent.dataSaving.connectors = this.connectors;
+        
 
         this.load(HomeComponent.config.left, "LEFT");
         this.load(HomeComponent.config.right, "RIGHT");
@@ -157,8 +186,8 @@ export class Step4Component implements OnInit , AfterViewInit {
 
 
         /*        this.state.diagramNodeData =  [
-            {"leftArray":[],"rightArray":[{"portId":"A","text":"A","portColor":"#eaeef8"}],"topArray":[],"bottomArray":[],"alphabet":"A","key":"LEFT_a6cd8208-4eac-ec11-a470-a029191869f6_0","img":https://localhost:5001/images/configurations\\a6aed7e9-fe84-40aa-a19e-71061653c37b.JPG,"DATA":{"id":"a6cd8208-4eac-ec11-a470-a029191869f6","name":"180 1P Male Code B","tE_PN":"1452727-2","customer_PN":"6Q0 035 575 A","pdM_LINK_PN":"1452727CA-B.ASM","rev":"B","description":"JACK HOUSING CODE B CREAM, 1WAY, FAKRA 2","length":0,"position":1,"fK_OemId":"6ce091a6-4bac-ec11-a470-a029191869f6","fK_CategoryId":"72e091a6-4bac-ec11-a470-a029191869f6","fK_ConfigId":"550dbd47-4dac-ec11-a470-a029191869f6","fK_CableId":null,"picture":null,"orientation":1,"showIn":3,"status":1,"category":{"id":"72e091a6-4bac-ec11-a470-a029191869f6","name":"Connector","hasNote":true,"hasCable":false,"hasConfig":true},"config":{"id":"550dbd47-4dac-ec11-a470-a029191869f6","name":"180 1P Male","type":null,"length":26,"position":1,"status":1,"orientation":2,"picture":{"id":"65bf8602-f6ad-ec11-a473-a029191869f6","picPath":"configurations\\a6aed7e9-fe84-40aa-a19e-71061653c37b.JPG"},"note":{"id":"0de5ecd7-4cac-ec11-a470-a029191869f6","name":"180 Male","description":"APPLICATION SPECIFICATION FOR 180° CONNECTOR IS 114-18622\nPRODUCT SPECIFICATION FOR 180° CONNECTOR IS 108-2129","order":0}},"cables":[],"parts":[{"fK_PartId":"edd68194-4eac-ec11-a470-a029191869f6"},{"fK_PartId":"eed68194-4eac-ec11-a470-a029191869f6"}]},"component_orientation":{"Side":"LEFT","Orientation":2},"loc":"0 0"},
-            {"leftArray":[{"portId":"B","text":"B","portColor":"#6cafdb"}],"rightArray":[],"topArray":[],"bottomArray":[],"alphabet":"B","key":"RIGHT_98cd8208-4eac-ec11-a470-a029191869f6_0","img":https://localhost:5001/images/configurations\\44ad35cc-f575-44c0-9f96-93956a5faca7.JPG,"DATA":{"id":"98cd8208-4eac-ec11-a470-a029191869f6","name":"180 1P Female Code B","tE_PN":"1452728-2","customer_PN":"6Q0 035 576 A","pdM_LINK_PN":"1452728CA-B.ASM","rev":"E","description":"PLUG HOUSING CODE B CREAM, 1WAY, FAKRA 2","length":0,"position":1,"fK_OemId":"6ce091a6-4bac-ec11-a470-a029191869f6","fK_CategoryId":"72e091a6-4bac-ec11-a470-a029191869f6","fK_ConfigId":"510dbd47-4dac-ec11-a470-a029191869f6","fK_CableId":null,"picture":null,"orientation":1,"showIn":3,"status":1,"category":{"id":"72e091a6-4bac-ec11-a470-a029191869f6","name":"Connector","hasNote":true,"hasCable":false,"hasConfig":true},"config":{"id":"510dbd47-4dac-ec11-a470-a029191869f6","name":"180 1P Female","type":null,"length":26,"position":1,"status":1,"orientation":1,"picture":{"id":"03ba08f5-f5ad-ec11-a473-a029191869f6","picPath":"configurations\\44ad35cc-f575-44c0-9f96-93956a5faca7.JPG"},"note":{"id":"08e5ecd7-4cac-ec11-a470-a029191869f6","name":"180 Female","description":"APPLICATION SPECIFICATION FOR 180° CONNECTOR IS 114-18622\nPRODUCT SPECIFICATION FOR 180° CONNECTOR IS 108-2129","order":0}},"cables":[],"parts":[{"fK_PartId":"e9d68194-4eac-ec11-a470-a029191869f6"},{"fK_PartId":"ead68194-4eac-ec11-a470-a029191869f6"}]},"component_orientation":{"Side":"RIGHT","Orientation":1},"loc":"800 0"}
+            {"leftArray":[],"rightArray":[{"portId":"A","text":"A","portColor":"#eaeef8"}],"topArray":[],"bottomArray":[],"alphabet":"A","key":"LEFT_a6cd8208-4eac-ec11-a470-a029191869f6_0","img":"https://localhost:5001/images/configurations\\a6aed7e9-fe84-40aa-a19e-71061653c37b.JPG","DATA":{"id":"a6cd8208-4eac-ec11-a470-a029191869f6","name":"180 1P Male Code B","tE_PN":"1452727-2","customer_PN":"6Q0 035 575 A","pdM_LINK_PN":"1452727CA-B.ASM","rev":"B","description":"JACK HOUSING CODE B CREAM, 1WAY, FAKRA 2","length":0,"position":1,"fK_OemId":"6ce091a6-4bac-ec11-a470-a029191869f6","fK_CategoryId":"72e091a6-4bac-ec11-a470-a029191869f6","fK_ConfigId":"550dbd47-4dac-ec11-a470-a029191869f6","fK_CableId":null,"picture":null,"orientation":1,"showIn":3,"status":1,"category":{"id":"72e091a6-4bac-ec11-a470-a029191869f6","name":"Connector","hasNote":true,"hasCable":false,"hasConfig":true},"config":{"id":"550dbd47-4dac-ec11-a470-a029191869f6","name":"180 1P Male","type":null,"length":26,"position":1,"status":1,"orientation":2,"picture":{"id":"65bf8602-f6ad-ec11-a473-a029191869f6","picPath":"configurations\\a6aed7e9-fe84-40aa-a19e-71061653c37b.JPG"},"note":{"id":"0de5ecd7-4cac-ec11-a470-a029191869f6","name":"180 Male","description":"APPLICATION SPECIFICATION FOR 180° CONNECTOR IS 114-18622\nPRODUCT SPECIFICATION FOR 180° CONNECTOR IS 108-2129","order":0}},"cables":[],"parts":[{"fK_PartId":"edd68194-4eac-ec11-a470-a029191869f6"},{"fK_PartId":"eed68194-4eac-ec11-a470-a029191869f6"}]},"component_orientation":{"Side":"LEFT","Orientation":2},"loc":"0 0"},
+            {"leftArray":[{"portId":"B","text":"B","portColor":"#6cafdb"}],"rightArray":[],"topArray":[],"bottomArray":[],"alphabet":"B","key":"RIGHT_98cd8208-4eac-ec11-a470-a029191869f6_0","img":"https://localhost:5001/images/configurations\\44ad35cc-f575-44c0-9f96-93956a5faca7.JPG","DATA":{"id":"98cd8208-4eac-ec11-a470-a029191869f6","name":"180 1P Female Code B","tE_PN":"1452728-2","customer_PN":"6Q0 035 576 A","pdM_LINK_PN":"1452728CA-B.ASM","rev":"E","description":"PLUG HOUSING CODE B CREAM, 1WAY, FAKRA 2","length":0,"position":1,"fK_OemId":"6ce091a6-4bac-ec11-a470-a029191869f6","fK_CategoryId":"72e091a6-4bac-ec11-a470-a029191869f6","fK_ConfigId":"510dbd47-4dac-ec11-a470-a029191869f6","fK_CableId":null,"picture":null,"orientation":1,"showIn":3,"status":1,"category":{"id":"72e091a6-4bac-ec11-a470-a029191869f6","name":"Connector","hasNote":true,"hasCable":false,"hasConfig":true},"config":{"id":"510dbd47-4dac-ec11-a470-a029191869f6","name":"180 1P Female","type":null,"length":26,"position":1,"status":1,"orientation":1,"picture":{"id":"03ba08f5-f5ad-ec11-a473-a029191869f6","picPath":"configurations\\44ad35cc-f575-44c0-9f96-93956a5faca7.JPG"},"note":{"id":"08e5ecd7-4cac-ec11-a470-a029191869f6","name":"180 Female","description":"APPLICATION SPECIFICATION FOR 180° CONNECTOR IS 114-18622\nPRODUCT SPECIFICATION FOR 180° CONNECTOR IS 108-2129","order":0}},"cables":[],"parts":[{"fK_PartId":"e9d68194-4eac-ec11-a470-a029191869f6"},{"fK_PartId":"ead68194-4eac-ec11-a470-a029191869f6"}]},"component_orientation":{"Side":"RIGHT","Orientation":1},"loc":"800 0"}
         ];
 
         this.state.diagramLinkData =[
@@ -204,7 +233,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                 
                 const connectorCmp = node.DATA as ComponentModel;
                 const kit = kits.find(k => connectorCmp.parts.some(p => p.fK_PartId === k.id))
-              
+               
                 console.log("Connector name  : " + node.DATA.name);
                 console.log("bool opre  : " + node.DATA.name.startsWith("90"),  "inc : " + inc);
                 if (diff >= HomeComponent.config.left.length) diff = 0;
@@ -244,12 +273,13 @@ export class Step4Component implements OnInit , AfterViewInit {
 
 
    
-
+                       
                             if (HomeComponent.config.CableTypeData[inc].cableType== "RTK 031"){
-                                kitNode.img1 = "https://localhost:5001/images/components/67205caa-6fc4-44f9-9a06-872f2dc2c44d.png"; 
+
+                                kitNode.img1 = "https://162.109.85.69:1198/images/components/67205caa-6fc4-44f9-9a06-872f2dc2c44d.png"; 
                               }
-                          else if (HomeComponent.config.CableTypeData[inc].cableType== "RG 174" || HomeComponent.config.CableTypeData[inc].cableType== "DACAR 462") {
-                              kitNode.img1 = "https://localhost:5001/images/components/67752722-b59f-4ecb-bc14-6fdce4e29f09.png";
+                            else if (HomeComponent.config.CableTypeData[inc].cableType== "RG 174" || HomeComponent.config.CableTypeData[inc].cableType== "DACAR 462") {
+                              kitNode.img1 = "https://162.109.85.69:1198/images/components/67752722-b59f-4ecb-bc14-6fdce4e29f09.png" ;
                               } 
 
                         
@@ -269,7 +299,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                         if(node.component_orientation.Side == "LEFT"){
                             console.log("Side : " + node.component_orientation.Side);
                             console.log("Cable type  : " + HomeComponent.config.CableTypeData[inc].cableType);
-                            x = x + 110;
+                            x = x + 105;
                                 if(node.DATA.config.position == 2){
                                     
                                     if(k==0){
@@ -286,7 +316,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                         }else{
                             console.log("Side : " + node.component_orientation.Side);
                             console.log("Cable type  : " + HomeComponent.config.CableTypeData[inc].cableType);
-                            x = x - 110;
+                            x = x - 105;
                             if(node.DATA.config.position == 2){
                                
                                 if(k==0){
@@ -642,7 +672,7 @@ export class Step4Component implements OnInit , AfterViewInit {
 
              for (let j = 0; j < component.parts.length; j++) {
                  const part = component.parts[j];
-                await self.getPart(part.fK_PartId).then((res: any) => {
+                 await self.getPart(part.fK_PartId).then((res: any) => {
                      comp_Parts.push(res);
                  });
              }
@@ -656,7 +686,7 @@ export class Step4Component implements OnInit , AfterViewInit {
 
              switch (component.showIn) {
                  case 0 :
-                    showIn = 'None';
+                     showIn = 'None';
                      break;
                  case 1 :
                      showIn = 'CD';
@@ -774,7 +804,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                              if (!node_sub) {
                                  Step4Component.myDiagram.model.addNodeData({
                                      key: key,
-                                    text: bom_item.Count,
+                                     text: bom_item.Count,
                                      category: "identification",
                                      type: showIn,
                                      id: child_id,
@@ -815,12 +845,12 @@ export class Step4Component implements OnInit , AfterViewInit {
      {
          const self = this;
          for (let i = 0; i < components.length; i++) {
-
+ 
              let part = components[i];
              let part_id = (part.customer_PN);
              let bom_item = self.bom_p.find(i => i.Id == part_id);
              let showIn;
-
+ 
              switch (part.showIn) {
                  case 0 :
                      showIn = 'None';
@@ -835,16 +865,16 @@ export class Step4Component implements OnInit , AfterViewInit {
                      showIn = 'CD_And_PD';
                      break;
              }
-
+ 
              let key = part_id + "_id_" + node.key;
              let node_sub = Step4Component.myDiagram.findNodeForKey(key);
              if (!node_sub) {
-
+ 
                  if (bom_item) {
                      bom_item.Qte = bom_item.Qte + 1;
                  } else {
                      self.count2++;
-
+ 
                      bom_item = new BomPModel();
                      bom_item.Qte = 1;
                       bom_item.Id = part_id;
@@ -858,9 +888,9 @@ export class Step4Component implements OnInit , AfterViewInit {
                     // bom_item.Type = showIn;
                      //bom_item.UM = 'PC';
                      self.bom_p.push(bom_item);
-
+ 
                  }
-
+ 
                  // Step4Component.myDiagram.model.addNodeData({
                  //     key: key,
                  //     text: bom_item.Count,
@@ -875,7 +905,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                  //     category: "identification"
                  // });
              }
-
+ 
              if (part.parts) {
                 let comp_Parts = self.comp_Parts = [];
 
@@ -891,7 +921,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                 await self.generatePartsIdentificationsP(comp_Parts, node);
             }
          }
-
+ 
  
      }
      async generateBomP()
@@ -899,21 +929,21 @@ export class Step4Component implements OnInit , AfterViewInit {
          const self = this;
          this.bom_p = [];
          this.count2 = 0;
-
+ 
          this.isNotGood = false;
-
+ 
          await this.generateSideIdentificationsP(HomeComponent.config.left, "LEFT");
          await this.generateSideIdentificationsP(HomeComponent.config.right, "RIGHT");
-
+ 
          Step4Component.myDiagram.model.linkDataArray.filter(item => item.category === 'linking').forEach((l) => {
-
+ 
  
              let cable = HomeComponent.config.cables.find(item => item.name == l.cableType);
              let cableFound = self.bom_p.find(i => i.TE_PN == cable.tE_PN);
              if (!cableFound)
              {
                  let newCable = new BomPModel();
-
+ 
                  
                  newCable.Qte = 'See Table';
                  newCable.Customer_PN = cable.customer_PN;
@@ -925,44 +955,44 @@ export class Step4Component implements OnInit , AfterViewInit {
                  newCable.Count2 = l.lead;
                  //newCable.UM = 'MR';
                  //newCable.Type = 'CD_And_PD';
-
+ 
                  self.bom_p.push(newCable);
              }
              else
              {
                  cableFound.Count2 += '/' + l.lead;
              }
-
+ 
          });
-
+ 
          HomeComponent.config.BOMP = this.bom_p;
-
+ 
      }
      async generateSideIdentificationsP(sideComponents: ComponentModel[], sideName: string)
      {
           const self = this;
           for (let i = 0; i < sideComponents.length; i++) {
-
+ 
               let component = sideComponents[i];
               let comp_Parts = self.comp_Parts = [];
               let showIn;
-
+ 
               const index = sideComponents.indexOf(component);
-
+ 
               for (let j = 0; j < component.parts.length; j++) {
                   const part = component.parts[j];
                   await self.getPart(part.fK_PartId).then((res: any) => {
                       comp_Parts.push(res);
                   });
               }
-
+ 
  
  
               let key = sideName + "_" + component.id + "_" + index;
               let node = Step4Component.myDiagram.findNodeForKey(key).data;
               let component_id = (component.customer_PN);
               let bom_item = self.bom_p.find(i => i.Id == component_id);
-
+ 
               switch (component.showIn) {
                   case 0 :
                       showIn = 'None';
@@ -977,7 +1007,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                       showIn = 'CD_And_PD';
                       break;
               }
-
+ 
               if (bom_item)
               {
                   bom_item.Qte = bom_item.Qte + 1;
@@ -985,7 +1015,7 @@ export class Step4Component implements OnInit , AfterViewInit {
               else
               {
                   self.count2++;
-
+ 
                   bom_item = new BomPModel();
                   bom_item.Qte = 1;
                    bom_item.Id = component_id;
@@ -998,9 +1028,9 @@ export class Step4Component implements OnInit , AfterViewInit {
                   //bom_item.Type = showIn;
                   //bom_item.UM = 'PC';
                   //bom_item.PDMLINK = component.pdM_LINK_PN;
-
+ 
                   self.bom_p.push(bom_item);
-
+ 
  
                   if (component.category.hasNote) {
                       let exists = this.componentsNotes.find(i => i.id == component.config.note.id);
@@ -1009,7 +1039,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                       }
                   }
               }
-
+ 
  
             //   Step4Component.myDiagram.model.addNodeData({
             //       key: component.id + "_id" + bom_item.Qte,
@@ -1024,23 +1054,23 @@ export class Step4Component implements OnInit , AfterViewInit {
             //       to: node.key,
             //       category: "identification"
             //   });
-
+ 
               let Linked_children = comp_Parts.filter(item => item.cables != null);
               let linked_child;
-
+ 
               if (Linked_children.length > 0) {
                   Step4Component.myDiagram.findNodeForKey(key).findLinksConnected().filter(item => item.category === 'linking').each(
                       function (link) {
                           link = link.data;
-
+ 
  
                           let cableFound = HomeComponent.config.cables.find(item => item.name == link.cableType);
                           linked_child = Linked_children.find(item => item.cables.find(cable => cable.fK_CableId == cableFound.id));
-
+ 
                           try {
                               let child_id = (linked_child.customer_PN);
                               let bom_item = self.bom_p.find(i => i.Id == child_id);
-
+ 
                               switch (linked_child.showIn) {
                                   case 0 :
                                       showIn = 'None';
@@ -1055,14 +1085,14 @@ export class Step4Component implements OnInit , AfterViewInit {
                                       showIn = 'CD_And_PD';
                                       break;
                               }
-
+ 
                               if (bom_item) {
                                   bom_item.Qte = bom_item.Qte + 1;
                               }
                               else
                               {
                                   self.count2++;
-
+ 
                                   bom_item = new BomPModel();
                                   bom_item.Qte = 1; 
                                   bom_item.Id = child_id;
@@ -1078,10 +1108,10 @@ export class Step4Component implements OnInit , AfterViewInit {
                                   bom_item.Count2 = self.count2;
                                   self.bom_p.push(bom_item);
                               }
-
+ 
                               let key = child_id + "_id_" + node.key;
                               let node_sub = Step4Component.myDiagram.findNodeForKey(key);
-
+ 
                             //   if (!node_sub) {
                             //       Step4Component.myDiagram.model.addNodeData({
                             //           key: key,
@@ -1097,9 +1127,9 @@ export class Step4Component implements OnInit , AfterViewInit {
                             //           category: "identification"
                             //       });
                             //   }
-
+ 
                               comp_Parts = comp_Parts.filter(obj => obj == linked_child);
-
+ 
                           }catch{
                               setTimeout(() => {
                                   self._toasterService.warning(
@@ -1108,19 +1138,19 @@ export class Step4Component implements OnInit , AfterViewInit {
                                       {toastClass: 'toast ngx-toastr', closeButton: true, enableHtml: true}
                                   );
                               }, 1000);
-
+ 
                               self.isNotGood = true;
                               return;
                           }
                       });
               }
-
+ 
               if (comp_Parts.length > 0) {
                   await this.generatePartsIdentificationsP(comp_Parts, node);
               }
           }
       }
-
+ 
  
 
     async generatePartsIdentificationsC(components: any[], node)
@@ -1326,7 +1356,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                  if (component.category.hasNote) {
                      let exists = this.componentsNotes.find(i => i.id == component.config.note.id);
                      if (!exists) {
-                        this.componentsNotes.push(component.config.note);
+                         this.componentsNotes.push(component.config.note);
                      }
                  }
              }
@@ -1804,7 +1834,6 @@ export class Step4Component implements OnInit , AfterViewInit {
                         data.length = length;
                         console.log(l.lead)
                         data.p_length = pd_length;
-                        console.log(JSON.stringify(l))
                         data.lead = l.lead;
                         data.from = l.from;
                         data.to = l.to;
@@ -1812,8 +1841,7 @@ export class Step4Component implements OnInit , AfterViewInit {
                         data.toPort = l.toPort;
                         data.id_cable = HomeComponent.config.cables.find(cable => cable.name === l.cableType).id;
                         this.Cable.push(data);
-                        console.log("haaaaaaaaaaaaaaaaaa cable" + JSON.stringify(this.Cable))
-                        console.log("lllllllllllllllllllllllllllll" + JSON.stringify(l))
+
                 }
 
             }
@@ -2060,19 +2088,14 @@ export class Step4Component implements OnInit , AfterViewInit {
                         length_body_html += ' <td>' + res + ' ±14' + '</td>';
                     } else {
                         cdt = 20;
-                       res = parseFloat(l.length) + (parseFloat(from.length) + parseFloat(to.length)) + cdt / 2;
+                        res = parseFloat(l.length) + (parseFloat(from.length) + parseFloat(to.length)) + cdt / 2;
                         length_body_html += ' <td>' + res + ' ±9' + '</td>';
                     }
                 }
                 
             }
         }
-        HomeComponent.dataSaving.te_pn = HomeComponent.config.partNumber
-        HomeComponent.dataSaving.cpn = HomeComponent.config.customerPN
-        HomeComponent.dataSaving.id_oem = HomeComponent.config.oemId
-        HomeComponent.dataSaving.id_harnesmaker = HomeComponent.config.harnessMakerId
-        HomeComponent.dataSaving.bom = HomeComponent.config.BOM
-        HomeComponent.dataSaving.isObsolete = false
+
 
 
         let lengthTable =
@@ -2226,7 +2249,7 @@ export class Step4Component implements OnInit , AfterViewInit {
       },
     
     ];
-     sheet_data_2 = [
+      sheet_data_2 = [
        
         {
             "QTY": '',
@@ -2424,7 +2447,7 @@ export class Step4Component implements OnInit , AfterViewInit {
         worksheet.getCell('I5').value = 'Pin Out Chart';
         worksheet.getCell('I6').value = 'Left';
         worksheet.getCell('J6').value = 'Right';
-       worksheet.getCell('N5').value = 'Drawing size';
+        worksheet.getCell('N5').value = 'Drawing size';
         worksheet.mergeCells('O5','R5');   
         worksheet.getCell('O5').value = 'Data Input Prompt (Example : Drawing Size)';
         worksheet.getCell('N6').value = 'A1';
@@ -2503,7 +2526,7 @@ export class Step4Component implements OnInit , AfterViewInit {
         // {
         //     print1
         // }
-       // else if (condition2)
+        // else if (condition2)
         // {
         //     print2
         // }
@@ -3075,8 +3098,7 @@ export class Step4Component implements OnInit , AfterViewInit {
     }
     
 */
- 
-
+    
     modernHorizontalPrevious()
     {
         HomeComponent.modernHorizontalPrevious("step3");
@@ -3084,7 +3106,6 @@ export class Step4Component implements OnInit , AfterViewInit {
 
     async modernHorizontalNext()
     {
-
 
         await this.generate_cd_bom();
         await this.generate_cd_lengths();
@@ -3097,7 +3118,12 @@ export class Step4Component implements OnInit , AfterViewInit {
         await this.generate_pd_notes();
         await this.generate_pd_packaging();
         //await this.fillingLeads();
-        
+        HomeComponent.dataSaving.te_pn = HomeComponent.config.partNumber
+        HomeComponent.dataSaving.cpn = HomeComponent.config.customerPN
+        HomeComponent.dataSaving.id_oem = HomeComponent.config.oemId
+        HomeComponent.dataSaving.id_harnesmaker = HomeComponent.config.harnessMakerId
+        HomeComponent.dataSaving.bom = HomeComponent.config.BOM
+        HomeComponent.dataSaving.isObsolete = false
 
         HomeComponent.modernHorizontalNext();
     }

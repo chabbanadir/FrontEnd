@@ -1,318 +1,83 @@
-<div class="content-header" xmlns="http://www.w3.org/1999/html">
-</div>
-
 <div class="card-body">
     <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h4 class="my-1">LEFT Side</h4>
-            <div
-                #leftSide="cdkDropList"
-                (cdkDropListDropped)="drop($event)"
-                [cdkDropListConnectedTo]="[rightSide]"
-                [cdkDropListData]="left"
-                cdkDropList
-                class="example-list col-md-12">
-
-                <div class="bg-white row" style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of left ; let i = index">
-                    <div class="col-md-12">
-                        <div class="media align-items-center example-box" >
-                            <input type="text" style="display: none" [value]="this.left[i].name" required>
-
-
-                            <img    class="d-block rounded mr-1"
-                                   alt="img-placeholder non-drag-img"
-                                   height="50"
-                                   src="{{ getCDN(side) }}"
-                                   width="100"
-                            />
-
-                          <!--  <ng-template #config>
-                                <img
-                                        class="d-block rounded mr-1"
-                                        alt="img-placeholder non-drag-img"
-                                        height="50"
-                                        src="{{side.config  ? getCDN(side.config.picture) :'assets/images/connectors/default-image.jpg' }}"
-                                        width="100"
-                                />
-                            </ng-template>
--->
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <small class="cart-item-title">
-                                        {{side.name ? side.name : 'No component selected'}}
-                                    </small><br>
-                                    <small class="cart-item-by">{{getPosition(side)}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <ng-select
-                                (change)="updateCount();updateLeft(i)"
-                                [(ngModel)]="this.left[i]"
-                                [clearable]="false"
-                                [items]="this.components"
-                                [class.error]="!this.valid && !this.left[i].name"
-                                [searchFn]="SearchForComponent"
-                                class="example-box"
-                                bindLabel="customer_PN"
-                                id="connector_left_{{i}}"
-                                name="connector_left_{{i}}"
-                                placeholder="Select Component"
-                                required
-                        >
-                            <!--<ng-template ng-option-tmp let-item="item">
-                                <span class="ng-value-label"> CPN {{ item.customer_PN }} | TE PN {{ item.tE_PN }}</span>
-                            </ng-template>
--->
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index" >
-                                <span  class="ng-value-label" > {{item.customer_PN}} - {{item.tE_PN }} </span>
-                            </ng-template>
-
-
-                        </ng-select>
-                    </div>
+      <!-- Left Side -->
+      <div class="col-md-6 col-sm-12">
+        <h4 class="my-1">LEFT Side</h4>
+        <div #leftSide="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[rightSide]"
+          [cdkDropListData]="left" cdkDropList class="example-list col-md-12">
+          <div class="bg-white row" style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of left; let i = index">
+            <div class="col-md-12">
+              <div class="media align-items-center example-box">
+                <input type="text" style="display: none" [value]="side.name" required>
+                <img class="d-block rounded mr-1" alt="img-placeholder non-drag-img" height="50" src="{{ getCDN(side) }}"
+                  width="100" />
+                <div class="media-body">
+                  <div class="media-heading">
+                    <small class="cart-item-title">{{side.name ? side.name : 'No component selected'}}</small><br>
+                    <small class="cart-item-by">{{getPosition(side)}}</small>
+                  </div>
                 </div>
-
-              <!--  <div class="row bg-white"  style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of left ; let i = index">
-                    <div class="col-md-12" style="align-self: center;">
-                        <div class="media align-items-center" >
-                            <input type="text" style="display: none" [value]="this.left[i].name" required>
-
-
-                            <img   *ngIf="side.picture; else config"
-                                   class="d-block rounded mr-1"
-                                   alt="img-placeholder non-drag-img"
-                                   height="50"
-                                   src="{{side.picture  ? getCDN(side.picture) :'assets/images/connectors/default-image.jpg' }}"
-                                   width="100"
-                            />
-
-                            <ng-template #config>
-                                <img
-                                        class="d-block rounded mr-1"
-                                        alt="img-placeholder non-drag-img"
-                                        height="50"
-                                        src="{{side.config  ? getCDN(side.config.picture) :'assets/images/connectors/default-image.jpg' }}"
-                                        width="100"
-                                />
-                            </ng-template>
-
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <small class="cart-item-title">
-                                        {{side.name ? side.name : 'No component selected'}}
-                                    </small><br>
-                                    <small class="cart-item-by">{{side.position? side.position + ' W' : ''}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <ng-select
-                                (change)="updateCount();updateLeft(i)"
-                                [(ngModel)]="this.left[i]"
-                                [clearable]="false"
-                                [items]="this.components"
-                                [class.error]="!this.valid && !this.left[i].name"
-                                class="example-box"
-                                bindLabel="customer_PN"
-                                id="connector_left_{{i}}"
-                                name="connector_left_{{i}}"
-                                placeholder="Select Component"
-                                required
-                        >
-                            <ng-template ng-option-tmp let-item="item">
-                                <span class="ng-value-label"> CPN {{ item.customer_PN }} | TE PN {{ item.tE_PN }}</span>
-                            </ng-template>
-                        </ng-select>
-                    </div>
-                </div>
--->
-
-
+              </div>
             </div>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <h4 class="my-1">Right Side </h4>
-            <div
-                #rightSide="cdkDropList"
-                (cdkDropListDropped)="drop($event)"
-                [cdkDropListConnectedTo]="[leftSide]"
-                [cdkDropListData]="right"
-                cdkDropList
-                class="example-list col-md-12">
-
-              <!--  <div class="row bg-white"  style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of right ; let i = index">
-                    <div class="col-md-6" style="align-self: center;">
-                        <div class="media align-items-center" >
-                            <input type="text" style="display: none" [value]="this.right[i].name" required>
-
-                            <img   *ngIf="side.picture; else config2"
-                                   class="d-block rounded mr-1"
-                                   alt="img-placeholder non-drag-img"
-                                   height="50"
-                                   src="{{side.picture  ? getCDN(side.picture) :'assets/images/connectors/default-image.jpg' }}"
-                                   width="100"
-                            />
-
-                            <ng-template #config2>
-                                <img
-                                        class="d-block rounded mr-1"
-                                        alt="img-placeholder non-drag-img"
-                                        height="50"
-                                        src="{{side.config  ? getCDN(side.config.picture) :'assets/images/connectors/default-image.jpg' }}"
-                                        width="100"
-                                />
-                            </ng-template>
-
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <small class="cart-item-title">
-                                        {{side.name ? side.name : 'No component selected'}}
-                                    </small><br>
-                                    <small class="cart-item-by">{{side.position? side.position + ' W' : ''}}</small>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-
-
-                        <ng-select
-                                (change)="updateCount();updateRight(i)"
-                                [(ngModel)]="this.right[i]"
-                                [clearable]="false"
-                                [items]="this.components"
-                                [class.error]="!this.valid && !this.right[i].name"
-                                class="example-box"
-                                bindLabel="customer_PN"
-                                id="connector_right_{{i}}"
-                                name="connector_right_{{i}}"
-                                placeholder="Select Component"
-                                required
-                        >
-                            <ng-template ng-option-tmp let-item="item">
-                                <span class="ng-value-label"> CPN {{ item.customer_PN }} | TE PN {{ item.tE_PN }}</span>
-                            </ng-template>
-
-                        </ng-select>
-                    </div>
-                </div>-->
-
-
-                <div class="bg-white row" style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of right ; let i = index">
-                    <div class="col-md-12">
-                        <div class="media align-items-center example-box" >
-
-                            <input type="text" style="display: none" [value]="this.right[i].name" required>
-
-                            <img   class="d-block rounded mr-1"
-                                   alt="img-placeholder non-drag-img"
-                                   height="50"
-                                   src="{{ getCDN(side) }}"
-                                   width="100"
-                            />
-
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <small class="cart-item-title">
-                                        {{side.name ? side.name : 'No component selected'}}
-                                    </small><br>
-                                    <small class="cart-item-by">{{ getPosition(side) }}</small>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <ng-select
-                                (change)="updateCount();updateRight(i)"
-                                [(ngModel)]="this.right[i]"
-                                [clearable]="false"
-                                [items]="this.components"
-                                [class.error]="!this.valid && !this.right[i].name"
-                                [searchFn]="SearchForComponent"
-                                class="example-box"
-                                bindLabel="customer_PN"
-                                id="connector_right_{{i}}"
-                                name="connector_right_{{i}}"
-                                placeholder="Select Component"
-                                required
-                        >
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index" >
-                                <span  class="ng-value-label" > {{item.customer_PN}} - {{item.tE_PN }} </span>
-                            </ng-template>
-                        </ng-select>
-                    </div>
-                </div>
-
-
-<!--
-                <div class="row bg-white"  style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of right ; let i = index">
-                    <div class="col-md-6" style="align-self: center;">
-                        <div class="media align-items-center">
-                            <input  type="text" style="display: none" [value]="side.name"
-                                    required>
-
-                            <img
-                                    class="d-block rounded mr-1"
-                                    alt="img-placeholder non-drag-img"
-                                    height="50"
-                                    src="{{side.picture  ? side.picture :'assets/images/connectors/default-image.jpg' }}"
-                                    width="100"
-                            />
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title">
-                                        {{side.name ? side.name : 'No component selected'}}
-                                    </h6>
-                                    <small class="cart-item-by">{{side.position? side.position + ' W' : ''}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <ng-select
-                                [(ngModel)]="this.right[i]"
-                                (change)="updateCount()"
-                                [clearable]="false"
-                                [items]="this.components"
-                                [class.error]="!this.valid"
-                                class="example-box"
-                                bindLabel="customer_PN"
-                                id="connector_right_{{i}}"
-                                name="connector_right_{{i}}"
-                                placeholder="Select Component"
-                                required
-                        >
-                        </ng-select>
-                    </div>
-                </div>
--->
-
-
-
-
+            <div class="col-md-12">
+              <ng-select (change)="updateCount(); updateLeft(i)" [(ngModel)]="left[i]" [clearable]="false"
+                [items]="components" [class.error]="!valid && !left[i].name" [searchFn]="SearchForComponent"
+                class="example-box" bindLabel="customer_PN" id="connector_left_{{i}}" name="connector_left_{{i}}"
+                placeholder="Select Component" required>
+                <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                  <span class="ng-value-label">{{item.customer_PN}} - {{item.tE_PN }}</span>
+                </ng-template>
+              </ng-select>
             </div>
+          </div>
         </div>
+      </div>
+  
+      <!-- Right Side -->
+      <div class="col-md-6 col-sm-12">
+        <h4 class="my-1">Right Side</h4>
+        <div #rightSide="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[leftSide]"
+          [cdkDropListData]="right" cdkDropList class="example-list col-md-12">
+          <div class="bg-white row" style="border: solid 1px #ccc;" cdkDrag *ngFor="let side of right; let i = index">
+            <div class="col-md-12">
+              <div class="media align-items-center example-box">
+                <input type="text" style="display: none" [value]="side.name" required>
+                <img class="d-block rounded mr-1" alt="img-placeholder non-drag-img" height="50" src="{{ getCDN(side) }}"
+                  width="100" />
+                <div class="media-body">
+                  <div class="media-heading">
+                    <small class="cart-item-title">{{side.name ? side.name : 'No component selected'}}</small><br>
+                    <small class="cart-item-by">{{getPosition(side)}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <ng-select (change)="updateCount(); updateRight(i)" [(ngModel)]="right[i]" [clearable]="false"
+                [items]="components" [class.error]="!valid && !right[i].name" [searchFn]="SearchForComponent"
+                class="example-box" bindLabel="customer_PN" id="connector_right_{{i}}" name="connector_right_{{i}}"
+                placeholder="Select Component" required>
+                <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                  <span class="ng-value-label">{{item.customer_PN}} - {{item.tE_PN }}</span>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-
-
-<div class="d-flex justify-content-between mt-2">
+  </div>
+  
+  <div class="d-flex justify-content-between mt-2">
     <button (click)="modernHorizontalPrevious()" class="btn btn-primary btn-prev" rippleEffect>
-        <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
-        <span class="align-middle d-sm-inline-block d-none">Previous</span>
+      <i class="align-middle mr-sm-25 mr-0" data-feather="arrow-left"></i>
+      <span class="align-middle d-sm-inline-block d-none">Previous</span>
     </button>
-
-    <button (click)="modernHorizontalNext()" [disabled]="!valid" class="btn btn-primary btn-next"
-            rippleEffect>
-        <span class="align-middle d-sm-inline-block d-none">Next</span>
-        <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
+  
+    <button (click)="modernHorizontalNext()" [disabled]="!valid" class="btn btn-primary btn-next" rippleEffect>
+      <span class="align-middle d-sm-inline-block d-none">Next</span>
+      <i class="align-middle ml-sm-25 ml-0" data-feather="arrow-right"></i>
     </button>
-</div>
-
+  </div>
+  
+  

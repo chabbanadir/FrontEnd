@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {ContentHeaderModule} from "../../layout/components/content-header/content-header.module";
-import { ArchiveListComponent } from './drawing-archive/archive-list//archive-list.component';
-import { EditArchiveComponent } from './drawing-archive/archive-list/edit-archive/edit-archive.component';
+import { FormsModule } from '@angular/forms';
 
 
 const routes = [
@@ -33,7 +32,8 @@ const routes = [
     declarations: [HomeComponent],
     imports: [
         RouterModule.forChild(routes),
-        ContentHeaderModule
+        ContentHeaderModule,
+        FormsModule 
     ],
     exports: [HomeComponent]
 })

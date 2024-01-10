@@ -36,6 +36,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public navigation: any;
   public selectedLanguage: any;
 
+  userData = {
+    username: '',
+    email: '',
+    image: null, // You may need to modify this based on your requirements
+    imageURL: "src/assets/images/avatars/2-small.png", // URL for displaying the image
+  };
+
+  public displayProfilInfos : boolean = false;
   @HostBinding('class.fixed-top')
   public isFixed = false;
 
@@ -167,6 +175,40 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout() {
     this._authenticationService.logout();
     this._router.navigate(['/']);
+  }
+
+  profilInfos(){
+    this.displayProfilInfos = true;
+  }
+
+  closeProfile(){
+    this.displayProfilInfos = false;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      // Preview the image
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.userData.image = file;
+        this.userData.imageURL = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  changeImage() {
+    // Implement logic to allow users to change the image
+    // For example, you can trigger the file input click event
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  submitForm() {
+    this.displayProfilInfos = false;
+    console.log('Form submitted:', this.currentUser);
+    // Add your logic to send the data to a server or perform other actions
   }
 
   // Lifecycle Hooks

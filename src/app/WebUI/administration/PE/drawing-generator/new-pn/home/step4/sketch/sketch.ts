@@ -6,7 +6,7 @@ import {ComponentModel} from "../../../../../../../../Domain/Entities/MasterData
 import {environment} from "../../../../../../../../../environments/environment";
 import {Inspector} from "../exts/DataInspector";
 import {HomeComponent} from "../../home.component";
-
+import { CableDataService } from "../cable-data.service";
 
 export class Sketch {
 
@@ -25,8 +25,12 @@ export class Sketch {
         });
 
     }
+
     // initialize diagram
     initDiagram(): go.Diagram {
+
+
+
 
 
 
@@ -66,7 +70,9 @@ export class Sketch {
                 Step4Component.myDiagram.model.startTransaction("add link dim");
                 Step4Component.myDiagram.model.addLinkData(
                     {
-                        from: fromnode.key, to: tonode.key, category: "Dimensioning",
+                        from: fromnode.key, 
+                        to: tonode.key, 
+                        category: "Dimensionings",
                         fromSpot: "TopLeft",
                         toSpot: "TopRight",
                         color: "black",
@@ -80,9 +86,12 @@ export class Sketch {
 
                     }
                 );
+                console.log("fromnode.key" + fromnode+ "tonode.key" + tonode )
                 Step4Component.myDiagram.model.addLinkData(
                     {
-                        from: fromnode.key , to: tonode.key , category: "Dimensioning",
+                        from: fromnode.key , 
+                        to: tonode.key , 
+                        category: "Dimensioning",
                         fromSpot: "TopRight",
                         toSpot: "TopLeft",
                         color: "black",
@@ -93,10 +102,13 @@ export class Sketch {
                         direction: 0,
                         gap: 0,
                         inset: 0,
-                    
                     }
+
+                    
                 );
+
                 Step4Component.myDiagram.model.commitTransaction("add link dim");
+
 
                 // to control what kind of Link is created,
                 // change the LinkingTool.archetypeLinkData's category
@@ -108,6 +120,7 @@ export class Sketch {
         });
         Step4Component.myDiagram.toolManager.mouseMoveTools.insertAt(0, new PortShiftingTool());
         Step4Component.myDiagram.commandHandler.archetypeGroupData = {key: 'Group', isGroup: true};
+
 
         const stayInViewport = function (part, pt) {
             const diagram = part.diagram;
@@ -123,6 +136,7 @@ export class Sketch {
             const y = Math.max(v.y + 1, Math.min(pt.y, v.bottom - b.height - 2)) + (loc.y - b.y);
             return new go.Point(x, y);
         }
+
 
         const nodeSelectionAdornmentTemplate =
             $(go.Adornment, "Auto",
@@ -272,6 +286,7 @@ export class Sketch {
                 )
             );
 
+
         // define the Node template
         Step4Component.myDiagram.nodeTemplate =
             $(go.Node, "Table",
@@ -311,6 +326,7 @@ export class Sketch {
                 {rotatable: true, rotateAdornmentTemplate: nodeRotateAdornmentTemplate},
                 {resizable: true, resizeObjectName: "PANEL", resizeAdornmentTemplate: nodeResizeAdornmentTemplate},
 
+
                 // the Panel holding the left port elements, which are themselves Panels,
                 // created for each item in the itemArray, bound to data.leftArray
                 $(go.Panel, "Spot",
@@ -343,7 +359,7 @@ export class Sketch {
                                         stroke: null,
                                         desiredSize: portSize,
                                         margin: new go.Margin(0, 0, 0, 0),
-                                        cursor: "pointer"
+                                        cursor: "pointer",
                                     },
                                     new go.Binding("fill", "portColor"),
                                     new go.Binding("desiredSize", "desiredSize")
@@ -372,7 +388,7 @@ export class Sketch {
                                 {
                                     _side: "top",
                                     fromSpot: go.Spot.TopRight, toSpot: go.Spot.TopRight,
-                                    fromLinkable: true, toLinkable: true, cursor: "pointer"
+                                    fromLinkable: true, toLinkable: true, cursor: "pointer",
                                 },
                                 new go.Binding("portId", "portId"),
                                 $(go.Shape, "Rectangle",
@@ -503,6 +519,8 @@ export class Sketch {
                     new go.Binding("width", "width"),
                     new go.Binding("height", "height")),
 
+
+
                     $(go.Picture,
                         {
                             row: 1,
@@ -546,12 +564,19 @@ export class Sketch {
 
 
 
+
+
+
                     
             );  // end Node
+
 
         function colorFunc() {
             return 'black';
         }
+
+
+
 
         function makeButton(text, action) {
             return $("ContextMenuButton",
@@ -579,6 +604,7 @@ export class Sketch {
 
                         Step4Component.myDiagram.model.commitTransaction("dim position");
 
+
                     }),
                 makeButton("Bottom",
                     function (e, obj) {  // OBJ is this Button
@@ -601,10 +627,11 @@ export class Sketch {
                     }),
             );
 
+
         Step4Component.myDiagram.linkTemplateMap.add("Dimensioning",
             $(DimensioningLink, {
 
-                    reshapable: true, resegmentable: true, curve: go.Link.Link, adjusting: go.Link.Stretch,
+                reshapable: true, resegmentable: true, curve: go.Link.Link, adjusting: go.Link.Stretch,
                     contextMenu: partContextMenu
                 },
                 new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
@@ -612,8 +639,57 @@ export class Sketch {
                 new go.Binding("direction"),
                 new go.Binding("extension"),
                 new go.Binding("inset"),
+                new go.Binding("points").makeTwoWay(),
+                $(go.Shape, {stroke: "gray"},
+                    new go.Binding("stroke", "color")),
+                $(go.Shape, {fromArrow: "BackwardOpenTriangle", segmentIndex: 2, stroke: "gray"},
+                    new go.Binding("stroke", "color")),
+                $(go.Shape, {toArrow: "OpenTriangle", segmentIndex: -3, stroke: "gray"},
+                    new go.Binding("stroke", "color")),
+                $(go.TextBlock,
+                    // leave some space around larger-than-normal text
+                    {
+                        isMultiline: false,
+                        editable: false,
+                        segmentOffset: new go.Point(NaN, 0),
+                        segmentIndex: 2,
+                        segmentFraction: 0.5,
+                        segmentOrientation: go.Link.OrientUpright,
+                        alignmentFocus: go.Spot.Bottom,
+                        stroke: "gray",
+                        font: "8pt sans-serif",
+                        textEdited: function (textBlock, previousText, currentText) {
+                            if (currentText.length == 0 || isNaN(currentText)) {
+                                textBlock.text = previousText;
+                            }
+                        }
 
-                // new go.Binding("points").ofModel(),
+                    },
+                    // the TextBlock.text comes from the Node.data.key property
+                    new go.Binding("text", "length").makeTwoWay()),
+
+                $(go.TextBlock,
+                    // leave some space around larger-than-normal text
+                    {
+                        visible: false
+                    },
+                    // the TextBlock.text comes from the Node.data.key property
+                    new go.Binding("text", "lead").makeTwoWay())
+            ));
+            Step4Component.myDiagram.linkTemplateMap.add("Dimensionings",
+            $(DimensioningLink, {
+
+                reshapable: true, resegmentable: true, curve: go.Link.Link, adjusting: go.Link.Stretch,
+                    contextMenu: partContextMenu
+                },
+                new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
+                new go.Binding("toSpot", "toSpot", go.Spot.parse),
+                new go.Binding("direction"),
+                new go.Binding("extension"),
+                new go.Binding("inset"),
+                
+
+
                 $(go.Shape, {stroke: "gray"},
                     new go.Binding("stroke", "color")),
                 $(go.Shape, {fromArrow: "BackwardOpenTriangle", segmentIndex: 2, stroke: "gray"},
@@ -651,6 +727,7 @@ export class Sketch {
                     new go.Binding("text", "lead").makeTwoWay())
             ));
 
+
         Step4Component.myDiagram.linkTemplateMap.add("identification",
             // if the BalloonLink class has been loaded from the Extensions directory, use it
             $(go.Link,
@@ -672,6 +749,7 @@ export class Sketch {
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify)
         ));
 
+
         // Link templates
         Step4Component.myDiagram.linkTemplateMap.add("linking",
             $(go.Link,  // defined below
@@ -679,7 +757,7 @@ export class Sketch {
                     corner: 100,
                     routing: go.Link.Orthogonal,  // may be either Orthogonal or AvoidsNodes
                     curve: go.Link.None,
-                    reshapable: true, resegmentable: true,
+                    reshapable: true, resegmentable: true,resizable:true,
                     layerName: "Background",
                     click: function (e, obj) {
                               // Extract the lead and cableType values from your link data
@@ -724,6 +802,7 @@ export class Sketch {
                     new go.Binding("stroke", "color", colorFunc)),
                 $(go.Shape, {isPanelMain: true, stroke: "white", strokeWidth: 17, name: "PIPE"}),
 
+
                 $(go.TextBlock,
                     // leave some space around larger-than-normal text
                     {
@@ -746,6 +825,7 @@ export class Sketch {
 
             )
         );
+
 
         return Step4Component.myDiagram;
     }
@@ -792,4 +872,12 @@ export class Sketch {
 
     };
 
+
 }
+function calculateCustomSpots() {
+            // Your custom logic to determine the custom spots based on the node
+        // For example, you can return an object like { x: 0, y: 0 } representing the custom spot
+
+        return { x:100, y:100};
+}
+

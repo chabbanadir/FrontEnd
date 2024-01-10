@@ -1,0 +1,95 @@
+<div class="dialog" id="dialog">
+    <div class="dialog-content closed">
+      <div class="dialog-header">
+        <img src="{{detailsDataTestList.image_drawing}}" alt="Drawing Image" />
+        <p class="floating {{getTextColorClass(detailsDataTestList.rev)}}">{{detailsDataTestList.rev}}</p>
+      </div>
+      <button class="close-button" (click)="closeDialog()"><img src="./../../../../../../../../assets/close.png"/></button>
+            <div class="dialog-body">
+                <table>
+                  <caption>General Infos</caption>
+                    <thead>
+                        <tr>
+                            <th>TEPN:</th>
+                            <th>CPN:</th>
+                            <th>Project Number:</th>
+                            <th>Oem:</th>
+                            <th>Harness:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{detailsDataTestList.te_pn}}</td>
+                            <td>{{detailsDataTestList.cpn}}</td>
+                            <td>{{detailsDataTestList.project_number}}</td>
+                            <td>{{oem}}</td>
+                            <td>{{harnessMaker}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table>
+                    <caption>Connectors</caption>
+                    <thead>
+                      <tr>
+                        <th>Left Connectors</th>
+                        <th>Right Connectors</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="connectorLeft.length >= connectorRight.length; else rightBigger">
+                      <tr *ngFor="let item of connectorLeft">
+                        <td>{{ item }}</td>
+                        <td>{{ connectorRight[connectorLeft.indexOf(item)] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <table>
+                    <caption>Leads</caption>
+                    <thead>
+                      <tr>
+                        <th>Lead</th>
+                        <th>Lead Name</th>
+                        <th>Lead Length</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of lead">
+                        <td>{{ item.lead }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.length }} mm</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table>
+                    <caption>BOM</caption>
+                    <thead>
+                      <tr>
+                        <th>TE_PN</th>
+                        <th>Description</th>
+                        <th>Qte</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of detailsDataTestList.boms">
+                        <td>{{ item.tE_PN }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.qte }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div class="dialog-footer">
+                <button class="btn btn-primary" id="downloadCPDF" (click)="downloadCDrawing()">Download C PDF</button>
+                <button class="btn btn-primary" id="downloadPPDF" (click)="downloadPDrawing()">Download P PDF</button>
+                <button class="btn btn-primary" id="downloadSmartAssembly" (click)="downloadSmartAssembly()">Download SmartAssembly</button>
+                <button class="btn btn-secondary" id="closeDialog" (click)="closeDialog()">Close</button>
+            </div>
+    </div>
+</div>
+
+<ng-template #rightBigger>
+  <tr *ngFor="let item of connectorRight; let i = index">
+    <td>{{ connectorLeft[i] }}</td>
+    <td>{{ item }}</td>
+  </tr>
+</ng-template>
